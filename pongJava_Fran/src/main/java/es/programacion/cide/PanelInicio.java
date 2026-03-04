@@ -49,7 +49,9 @@ public class PanelInicio extends JPanel {
         btnComenzar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ventanaPrincipal.cambiarPanel(new PanelJuego(ventanaPrincipal));
+                PanelJuego panelJuego= new PanelJuego(ventanaPrincipal);
+                ventanaPrincipal.cambiarPanel(panelJuego);
+                panelJuego.requestFocus();
             }
         });
 

@@ -8,13 +8,15 @@ public class Palas {
     private int alto;
     private int ancho;
     private int velocidad;
+    private VentanaPrincipal vp;
 
     // constructor
-    public Palas(int x, int y) {
+    public Palas(int x, int y, int ancho,int alto, VentanaPrincipal ventanaPrincipal) {
         this.x = x;
         this.y = y;
-        ancho = 20;
-        alto = 60;
+        this.ancho = ancho;
+        this.alto = alto;
+        this.vp=ventanaPrincipal;
         velocidad = 5;
     }
 
@@ -35,21 +37,19 @@ public class Palas {
         this.y = y;
     }
 
-    public int getAncho() {
-        return ancho;
-    }
-
-    public int getAlto() {
-        return alto;
-    }
-
     // metodos
     public void moverArriba() {
-        y -= velocidad;
+        if (y >0) {
+            y -= velocidad;
+        }
+        else{y=0;}
     }
 
     public void moverAbajo() {
-        y += velocidad;
+        if (y+alto <vp.getAltoVentana()) {
+            y += velocidad;
+        }
+        else{y=vp.getAltoVentana()-alto;}
     }
 
     protected void pintarPalas(Graphics2D g, Image img) {
