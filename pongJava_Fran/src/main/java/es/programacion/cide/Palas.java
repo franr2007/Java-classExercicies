@@ -17,7 +17,7 @@ public class Palas {
         this.ancho = ancho;
         this.alto = alto;
         this.vp=ventanaPrincipal;
-        velocidad = 5;
+        velocidad = 10;
     }
 
     // getters y setters
@@ -35,6 +35,14 @@ public class Palas {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public int getAncho() {
+        return ancho;
+    }
+
+    public int getAlto() {
+        return alto;
     }
 
     // metodos
