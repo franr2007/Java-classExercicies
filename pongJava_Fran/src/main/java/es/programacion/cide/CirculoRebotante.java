@@ -21,7 +21,45 @@ public class CirculoRebotante {
         imgPelota = imgPelotaOriginal.getImage();
     }
     // getters y setters
+    public int getX() {
+        return x;
+    }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getAncho() {
+        return RADI*2;
+    }
+
+    public int getAlto() {
+        return RADI*2;
+    }
+
+    public int getDX() {
+        return dx;
+    }
+
+    public void setDX(int dx) {
+        this.dx = dx;
+    }
+
+    public int getDY() {
+        return dy;
+    }
+
+    public void setDY(int dy) {
+        this.dy = dy;
+    }
     // metodos
     protected void pintarPelota(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
