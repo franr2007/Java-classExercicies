@@ -11,10 +11,7 @@ public class VentanaPrincipal extends JFrame {
     // Atributos
     private JPanel contenedorPaneles;
     private PanelInicio panelInicio;
-    private GraphicsDevice gd;
     private Rectangle r;
-    private int ancho;
-    private int alto;
 
     // constructor
     public VentanaPrincipal() {
@@ -23,17 +20,12 @@ public class VentanaPrincipal extends JFrame {
         } catch (Exception e) {
         }
 
-        //variable para recojer la panalla completa de la pantalla
-        gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        r= gd.getDefaultConfiguration().getBounds();
-        ancho= r.width;
-        alto= r.height;
-
         // Parametros ventana
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
+        setLayout(new BorderLayout(0,0));
         setSize(800, 400);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH); //Ventana Maximizada
+        getContentPane().setBackground(Color.BLACK);
 
         contenedorPaneles = new JPanel(new CardLayout()); // Contenedor de paneles tipo layout
 
@@ -48,11 +40,11 @@ public class VentanaPrincipal extends JFrame {
     }
 
     public int getAnchoVentana(){
-        return ancho;
+        return getContentPane().getWidth();
     }
 
     public int getAltoVentana(){
-        return alto;
+        return getContentPane().getHeight();
     }
 
     // metodos

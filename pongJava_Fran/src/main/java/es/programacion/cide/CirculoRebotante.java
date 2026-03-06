@@ -1,15 +1,12 @@
 package es.programacion.cide;
 
 import java.awt.*;
-import javax.swing.ImageIcon;
 
 public class CirculoRebotante {
     // atributos
     private int x, y;
     private int dx, dy;
-    private final int RADI = 50;
-    private ImageIcon imgPelotaOriginal;
-    private Image imgPelota;
+    private final int RADI = 20;
 
     // constructor
     public CirculoRebotante(int x, int y, int dx, int dy) {
@@ -17,8 +14,6 @@ public class CirculoRebotante {
         this.y = y;
         this.dx = dx;
         this.dy = dy;
-        imgPelotaOriginal = new ImageIcon(getClass().getResource("/pelota_voley.jpg"));
-        imgPelota = imgPelotaOriginal.getImage();
     }
     // getters y setters
     public int getX() {
@@ -63,7 +58,8 @@ public class CirculoRebotante {
     // metodos
     protected void pintarPelota(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(imgPelota, x, y, RADI * 2, RADI * 2, null);
+        g.setColor(Color.white);
+        g2d.fillOval(x, y, RADI * 2, RADI * 2);
     }
 
     public void moverPelota(int ancho, int alto) {

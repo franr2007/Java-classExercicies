@@ -37,19 +37,19 @@ public class PanelInicio extends JPanel {
         JLabel textoJugador1 = new JLabel("Jugador1");
         textoJugador1.setBorder(borde);
         JTextField fieldJugador1 = new JTextField(40);
-        nombreJugador1 = fieldJugador1.getText();
 
         JLabel textoJugador2 = new JLabel("Jugador2");
         textoJugador2.setBorder(borde);
         JTextField fieldJugador2 = new JTextField(40);
-        nombreJugador2 = fieldJugador2.getText();
 
         JButton btnComenzar = new JButton("Comenzar");
         btnComenzar.setPreferredSize(new Dimension(400, 80));
         btnComenzar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                PanelJuego panelJuego= new PanelJuego(ventanaPrincipal);
+                nombreJugador2 = fieldJugador2.getText();
+                nombreJugador1 = fieldJugador1.getText();
+                PanelJuego panelJuego = new PanelJuego(ventanaPrincipal, PanelInicio.this);
                 ventanaPrincipal.cambiarPanel(panelJuego);
                 panelJuego.requestFocus();
             }

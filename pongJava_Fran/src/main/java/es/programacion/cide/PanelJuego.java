@@ -16,18 +16,16 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
     private CirculoRebotante pelota;
     private Palas palaIzq;
     private Palas palaDer;
-    private ImageIcon imgPalaIzqOriginal;
-    private Image imgPalaIzq;
-    private ImageIcon imgPalaDerOriginal;
-    private Image imgPalaDer;
     private Fondo fondo;
     private final int x, y; // variables de pelota
     private final int dx, dy; // variables de pelota
     private Timer timer;
     private final int DELAY = 10;
+    private final int margen = 40;
     private VentanaPrincipal vp;
-    private final int anchoPala = 150;
-    private final int altoPala = 250;
+    private PanelInicio pI;
+    private final int anchoPala = 20;
+    private final int altoPala = 200;
     private boolean usandoW;
     private boolean usandoS;
     private boolean usandoArriba;
@@ -36,7 +34,7 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
     private int nuevaVelocidadY;
 
     // constructor
-    public PanelJuego(VentanaPrincipal ventanaPrincipal) {
+    public PanelJuego(VentanaPrincipal ventanaPrincipal, PanelInicio panelInicio) {
         setLayout(null);
         setFocusable(true);
         addKeyListener(this);
@@ -46,26 +44,23 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
         usandoS = false;
         usandoW = false;
 
-        this.vp = ventanaPrincipal;
-        x = vp.getAnchoVentana()/2;
-        y = vp.getAltoVentana()/2;
+        vp= ventanaPrincipal;
+        pI=panelInicio;
+        
+        x = vp.getAnchoVentana() / 2;
+        y = vp.getAltoVentana() / 2;
         dx = 6;
         dy = 6;
 
-        imgPalaDerOriginal = new ImageIcon(getClass().getResource("/imgPalaDer.png"));
-        imgPalaDer = imgPalaDerOriginal.getImage();
-
-        imgPalaIzqOriginal = new ImageIcon(getClass().getResource("/imgPalaIzq.png"));
-        imgPalaIzq = imgPalaIzqOriginal.getImage();
-
-        fondo = new Fondo(vp);
+        fondo = new Fondo(vp,pI);
 
         pelota = new CirculoRebotante(x, y, dx, dy);
         timer = new Timer(DELAY, this);
         timer.start();
 
-        palaIzq = new Palas(20, vp.getAltoVentana() / 2, anchoPala, altoPala, vp);
-        palaDer = new Palas(vp.getAnchoVentana() - anchoPala, vp.getAltoVentana() / 2, anchoPala, altoPala, vp);
+        palaIzq = new Palas(margen, vp.getAltoVentana() / 2, anchoPala, altoPala, vp);
+        palaDer = new Palas(vp.getAnchoVentana() - anchoPala - margen, vp.getAltoVentana() / 2, anchoPala, altoPala,
+                vp);
     }
 
     // getters y setters
@@ -77,11 +72,17 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
         Graphics2D g2d = (Graphics2D) g;
 
         fondo.pintarFondo(g2d);
-
+        fondo.pintarLC(g2d);
+        fondo.pintarContadorIzq(g2d);
+        fondo.pintarContadorDer(g2d);
+        fondo.pintarNombrej1(g2d);
+        fondo.pintarNombrej2(g2d);
         pelota.pintarPelota(g2d);
 
-        palaIzq.pintarPalas(g2d, imgPalaIzq);
-        palaDer.pintarPalas(g2d, imgPalaDer);
+        palaIzq.pintarPalas(g2d, new Color(255, 32, 32));
+        palaDer.pintarPalas(g2d, new Color(255, 107, 0));
+
+        fondo.pintarCRT(g2d);
     }
 
     @Override
@@ -167,7 +168,7 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
             cambioVY();
 
             pelota.setDY(nuevaVelocidadY);
-            pelota.setDX(nuevaVelocidadX+1); // esto hace que la pelota rebote
+            pelota.setDX(nuevaVelocidadX + 1); // esto hace que la pelota rebote
             pelota.setX(palaIzq.getX() + palaIzq.getAncho() + 1); // esto hace que la pelota no se quede pegada en la
                                                                   // pala
         }
@@ -186,7 +187,7 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
             cambioVY();
 
             pelota.setDY(nuevaVelocidadY);
-            pelota.setDX(nuevaVelocidadX-1); // esto hace que la pelota rebote
+            pelota.setDX(nuevaVelocidadX - 1); // esto hace que la pelota rebote
             pelota.setX(palaDer.getX() - pelota.getAncho() - 1); // esto hace que la pelota no se quede pegada en la
                                                                  // pala
         }
@@ -196,9 +197,9 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
         nuevaVelocidadY = pelota.getDY();
 
         if (nuevaVelocidadY < 0) {
-                pelota.setDY(nuevaVelocidadY - 1);
+            pelota.setDY(nuevaVelocidadY - 1);
         } else if (nuevaVelocidadY > 0) {
-                pelota.setDY(nuevaVelocidadY + 1);
+            pelota.setDY(nuevaVelocidadY + 1);
         }
     }
 }

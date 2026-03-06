@@ -11,12 +11,12 @@ public class Palas {
     private VentanaPrincipal vp;
 
     // constructor
-    public Palas(int x, int y, int ancho,int alto, VentanaPrincipal ventanaPrincipal) {
+    public Palas(int x, int y, int ancho, int alto, VentanaPrincipal ventanaPrincipal) {
         this.x = x;
         this.y = y;
         this.ancho = ancho;
         this.alto = alto;
-        this.vp=ventanaPrincipal;
+        this.vp = ventanaPrincipal;
         velocidad = 10;
     }
 
@@ -47,26 +47,23 @@ public class Palas {
 
     // metodos
     public void moverArriba() {
-        if (y >0) {
+        if (y > 0) {
             y -= velocidad;
+        } else {
+            y = 0;
         }
-        else{y=0;}
     }
 
     public void moverAbajo() {
-        if (y+alto <vp.getAltoVentana()) {
+        if (y + alto < vp.getAltoVentana()) {
             y += velocidad;
+        } else {
+            y = vp.getAltoVentana() - alto;
         }
-        else{y=vp.getAltoVentana()-alto;}
     }
 
-    protected void pintarPalas(Graphics2D g, Image img) {
-
-        if (img != null) {
-            g.drawImage(img, x, y, ancho, alto, null);
-        } else {
-            g.setColor(Color.BLACK);
-            g.fillRect(x, y, ancho, alto);
-        }
+    protected void pintarPalas(Graphics2D g, Color color) {
+        g.setColor(color);
+        g.fillRoundRect(x, y, ancho, alto, 20, 20);
     }
 }
