@@ -23,7 +23,7 @@ public class Fondo {
     }
 
     public void setContadorj1(int contadorj1) {
-        this.contadorj1 = contadorj1;
+        this.contadorj1 += contadorj1;
     }
 
     public int getContadorj2() {
@@ -31,7 +31,7 @@ public class Fondo {
     }
 
     public void setContadorj2(int contadorj2) {
-        this.contadorj2 = contadorj2;
+        this.contadorj2 += contadorj2;
     }
     // metodos
 
@@ -55,15 +55,37 @@ public class Fondo {
     }
 
     protected void pintarContadorIzq(Graphics2D g) {
+        // Este es el contadorIzq coloreado pricipal
         g.setColor(new Color(255, 32, 32));
         g.setFont(new Font("Arial", Font.BOLD, 100));
-        g.drawString(String.valueOf(contadorj1), vp.getAnchoVentana() / 2-80, 100);
+        g.drawString(String.valueOf(contadorj1), vp.getAnchoVentana() / 2-80, 100);// esto dibuja el contadorIzq
+
+        // los siguientes 2 hacen lo mismo pero con distinta opacidad, altura y anchura
+        // para darle intensidad a las palas
+        g.setColor(new Color(255, 32, 32,60));
+        g.setFont(new Font("Arial", Font.BOLD, 100));
+        g.drawString(String.valueOf(contadorj1), vp.getAnchoVentana() / 2-77, 101);
+
+        g.setColor(new Color(255, 32, 32,30));
+        g.setFont(new Font("Arial", Font.BOLD, 100));
+        g.drawString(String.valueOf(contadorj1), vp.getAnchoVentana() / 2-74, 102);
     }
 
     protected void pintarContadorDer(Graphics2D g) {
+        // Este es el contadorDer coloreado pricipal
         g.setColor(new Color(255, 107, 0));
         g.setFont(new Font("Arial", Font.BOLD, 100));
         g.drawString(String.valueOf(contadorj2), vp.getAnchoVentana()/2+25, 100);
+
+        // los siguientes 2 hacen lo mismo pero con distinta opacidad, altura y anchura
+        // para darle intensidad a las palas
+        g.setColor(new Color(255, 107, 0,60));
+        g.setFont(new Font("Arial", Font.BOLD, 106));
+        g.drawString(String.valueOf(contadorj2), vp.getAnchoVentana()/2+22, 101);
+
+        g.setColor(new Color(255, 107, 0,30));
+        g.setFont(new Font("Arial", Font.BOLD, 112));
+        g.drawString(String.valueOf(contadorj2), vp.getAnchoVentana()/2+19, 102);
     }
 
     protected void pintarNombrej1(Graphics2D g) {
@@ -73,9 +95,11 @@ public class Fondo {
     }
 
     protected void pintarNombrej2(Graphics2D g) {
+        int anchoTexto = g.getFontMetrics().stringWidth(pI.getNombreJugador2());
+
         g.setColor(new Color(255, 107, 0));
         g.setFont(new Font("Arial", Font.BOLD, 100));
-        g.drawString(pI.getNombreJugador2(), vp.getAnchoVentana()+40- (vp.getAnchoVentana() / 3), 100);
+        g.drawString(pI.getNombreJugador2(), vp.getAnchoVentana() - 40 - anchoTexto, 100);
     }
 
     protected void pintarCRT(Graphics2D g) {

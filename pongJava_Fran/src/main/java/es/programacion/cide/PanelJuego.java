@@ -104,6 +104,7 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
         pelota.moverPelota(vp.getAnchoVentana(), vp.getAltoVentana());
 
         comprobarChoque();
+        comprobarGol();
 
         repaint();
     }
@@ -200,6 +201,23 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
             pelota.setDY(nuevaVelocidadY - 1);
         } else if (nuevaVelocidadY > 0) {
             pelota.setDY(nuevaVelocidadY + 1);
+        }
+    }
+
+    protected void comprobarGol(){
+        if (pelota.getX()<=0) {
+            fondo.setContadorj2(1);
+            pelota.setX(x);
+            pelota.setY(y);
+            pelota.setDX(dx);
+            pelota.setDY(dy);
+        }
+        if (pelota.getX()+pelota.getAncho()>=vp.getAnchoVentana()) {
+            fondo.setContadorj1(1);
+            pelota.setX(x);
+            pelota.setY(y);
+            pelota.setDX(dx);
+            pelota.setDY(dy);
         }
     }
 }
