@@ -25,7 +25,6 @@ public class VentanaPrincipal extends JFrame {
         setLayout(new BorderLayout(0,0));
         setSize(800, 400);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH); //Ventana Maximizada
-        getContentPane().setBackground(Color.BLACK);
 
         contenedorPaneles = new JPanel(new CardLayout()); // Contenedor de paneles tipo layout
 

@@ -3,6 +3,8 @@ package es.programacion.cide;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 public class Fondo {
     // Atributos
@@ -10,11 +12,15 @@ public class Fondo {
     private PanelInicio pI;
     private int contadorj1;
     private int contadorj2;
+    private ImageIcon imagenOriginal;
+    private Image fondo;
 
     // constructor
     Fondo(VentanaPrincipal ventanaPrincipal, PanelInicio panelInicio) {
         this.vp = ventanaPrincipal;
-        this.pI=panelInicio;
+        this.pI = panelInicio;
+        imagenOriginal= new ImageIcon(getClass().getResource("/fondo_pong.jpg"));
+        fondo= imagenOriginal.getImage();
     }
 
     // getters y setters
@@ -36,8 +42,8 @@ public class Fondo {
     // metodos
 
     protected void pintarFondo(Graphics2D g) {
-            g.setColor(Color.black);
-            g.fillRect(0, 0, vp.getAnchoVentana(), vp.getAltoVentana());
+        g.setColor(Color.black);
+        g.drawImage(fondo, 0, 0, vp.getAnchoVentana(), vp.getAltoVentana(), null);
     }
 
     protected void pintarLC(Graphics2D g) {
@@ -58,34 +64,34 @@ public class Fondo {
         // Este es el contadorIzq coloreado pricipal
         g.setColor(new Color(255, 32, 32));
         g.setFont(new Font("Arial", Font.BOLD, 100));
-        g.drawString(String.valueOf(contadorj1), vp.getAnchoVentana() / 2-80, 100);// esto dibuja el contadorIzq
+        g.drawString(String.valueOf(contadorj1), vp.getAnchoVentana() / 2 - 80, 100);// esto dibuja el contadorIzq
 
         // los siguientes 2 hacen lo mismo pero con distinta opacidad, altura y anchura
         // para darle intensidad a las palas
-        g.setColor(new Color(255, 32, 32,60));
+        g.setColor(new Color(255, 32, 32, 60));
         g.setFont(new Font("Arial", Font.BOLD, 100));
-        g.drawString(String.valueOf(contadorj1), vp.getAnchoVentana() / 2-77, 101);
+        g.drawString(String.valueOf(contadorj1), vp.getAnchoVentana() / 2 - 77, 101);
 
-        g.setColor(new Color(255, 32, 32,30));
+        g.setColor(new Color(255, 32, 32, 30));
         g.setFont(new Font("Arial", Font.BOLD, 100));
-        g.drawString(String.valueOf(contadorj1), vp.getAnchoVentana() / 2-74, 102);
+        g.drawString(String.valueOf(contadorj1), vp.getAnchoVentana() / 2 - 74, 102);
     }
 
     protected void pintarContadorDer(Graphics2D g) {
         // Este es el contadorDer coloreado pricipal
         g.setColor(new Color(255, 107, 0));
         g.setFont(new Font("Arial", Font.BOLD, 100));
-        g.drawString(String.valueOf(contadorj2), vp.getAnchoVentana()/2+25, 100);
+        g.drawString(String.valueOf(contadorj2), vp.getAnchoVentana() / 2 + 25, 100);
 
         // los siguientes 2 hacen lo mismo pero con distinta opacidad, altura y anchura
         // para darle intensidad a las palas
-        g.setColor(new Color(255, 107, 0,60));
+        g.setColor(new Color(255, 107, 0, 60));
         g.setFont(new Font("Arial", Font.BOLD, 106));
-        g.drawString(String.valueOf(contadorj2), vp.getAnchoVentana()/2+22, 101);
+        g.drawString(String.valueOf(contadorj2), vp.getAnchoVentana() / 2 + 22, 101);
 
-        g.setColor(new Color(255, 107, 0,30));
+        g.setColor(new Color(255, 107, 0, 30));
         g.setFont(new Font("Arial", Font.BOLD, 112));
-        g.drawString(String.valueOf(contadorj2), vp.getAnchoVentana()/2+19, 102);
+        g.drawString(String.valueOf(contadorj2), vp.getAnchoVentana() / 2 + 19, 102);
     }
 
     protected void pintarNombrej1(Graphics2D g) {
@@ -104,8 +110,8 @@ public class Fondo {
 
     protected void pintarCRT(Graphics2D g) {
         g.setColor(new Color(0, 0, 0, 40));
-        for (int y = 0; y < vp.getAltoVentana(); y += 4) { //bucle para aplicar lineas tipo 'retro'
-            g.fillRect(0, y, vp.getAnchoVentana(), 2);//pinta las lineas
+        for (int y = 0; y < vp.getAltoVentana(); y += 4) { // bucle para aplicar lineas tipo 'retro'
+            g.fillRect(0, y, vp.getAnchoVentana(), 2);// pinta las lineas
         }
 
         // Tinte rojizo sutil
