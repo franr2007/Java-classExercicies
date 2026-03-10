@@ -4,6 +4,10 @@ import java.awt.*;
 
 import javax.swing.*;
 
+//41663903R
+//Francisco Javier Rodriguez
+//16-02-26
+
 public class VentanaInstrucciones extends JFrame{
     // atributos
     private JPanel panelGeneral;

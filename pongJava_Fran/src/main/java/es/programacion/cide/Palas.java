@@ -2,6 +2,10 @@ package es.programacion.cide;
 
 import java.awt.*;
 
+//41663903R
+//Francisco Javier Rodriguez
+//16-02-26
+
 public class Palas {
     // atributos
     private int x, y;
