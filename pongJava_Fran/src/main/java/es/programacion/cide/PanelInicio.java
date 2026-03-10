@@ -41,7 +41,7 @@ public class PanelInicio extends JPanel {
         this.vp = ventanaPrincipal;
 
         // imagen de fondo del panel
-        imagenOriginal = new ImageIcon(getClass().getResource("/fondo_menu.gif"));
+        imagenOriginal = new ImageIcon(getClass().getResource("/fondo_pong.jpg"));
         fondo = imagenOriginal.getImage();
 
         // constantes grid para el panel
