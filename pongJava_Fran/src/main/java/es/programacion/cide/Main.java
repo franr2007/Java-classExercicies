@@ -8,9 +8,9 @@ package es.programacion.cide;
 public class Main {
     public static void main(String[] args) {
 
-        VentanaPrincipal ventanaPrincipal = new VentanaPrincipal();
+        VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(); //añade la ventana principal
 
-        ventanaPrincipal.setVisible(true);
+        ventanaPrincipal.setVisible(true); //la hace visible
 
     }
 }

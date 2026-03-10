@@ -7,7 +7,7 @@ public class Palas {
     private int x, y;
     private int alto;
     private int ancho;
-    private int velocidad;
+    private final int velocidad = 15;
     private VentanaPrincipal vp;
 
     // constructor
@@ -17,7 +17,6 @@ public class Palas {
         this.ancho = ancho;
         this.alto = alto;
         this.vp = ventanaPrincipal;
-        velocidad = 10;
     }
 
     // getters y setters
@@ -46,6 +45,8 @@ public class Palas {
     }
 
     // metodos
+
+    //metodo para mover la pelota hacia arriba
     public void moverArriba() {
         if (y > 0) {
             y -= velocidad;
@@ -54,6 +55,7 @@ public class Palas {
         }
     }
 
+    //metodo para mover la pelota arriba
     public void moverAbajo() {
         if (y + alto < vp.getAltoVentana()) {
             y += velocidad;
@@ -62,6 +64,8 @@ public class Palas {
         }
     }
 
+
+    //metodo para pintar las palas
     protected void pintarPalas(Graphics2D g, Color color) {
         g.setColor(new Color(color.getRed(), color.getGreen(), color.getBlue(), 255)); // Esta es la pala coloreada
                                                                                        // principal

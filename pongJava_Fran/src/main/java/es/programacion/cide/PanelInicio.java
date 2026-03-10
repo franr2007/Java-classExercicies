@@ -149,6 +149,8 @@ public class PanelInicio extends JPanel {
     }
 
     // metodos
+
+    //metodo para definir estilos
     protected void definirEstilos() {
         for (int i = 0; i < arrayButtons.length; i++) { // este for, recorre todo el array botones y les assigna los
                                                         // estilos siguientes
@@ -158,16 +160,20 @@ public class PanelInicio extends JPanel {
             arrayButtons[i].setBackground(Color.red);
         }
 
+        //estilos texto j1, j2
         textoJugador1.setFont(fuenteTxt);
         textoJugador1.setForeground(Color.white);
         textoJugador2.setFont(fuenteTxt);
         textoJugador2.setForeground(Color.white);
 
-        fuenteTxt = new Font("Monospace", 3, 100);
+        //estilo titulo
+        fuenteTxt = new Font("Monospace", 1, 100);
         titulo.setFont(fuenteTxt);
         titulo.setForeground(Color.white);
     }
 
+    //pinta el fondo
+    @Override
     protected void paintComponent(Graphics g) { // pinta el fondo
         super.paintComponent(g);
         g.drawImage(fondo, 0, 0, vp.getAnchoVentana() + 100, vp.getAltoVentana() + 100, null);

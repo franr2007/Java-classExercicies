@@ -44,15 +44,15 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
         usandoS = false;
         usandoW = false;
 
-        vp= ventanaPrincipal;
-        pI=panelInicio;
-        
+        vp = ventanaPrincipal;
+        pI = panelInicio;
+
         x = vp.getAnchoVentana() / 2;
         y = vp.getAltoVentana() / 2;
         dx = 6;
         dy = 6;
 
-        fondo = new Fondo(vp,pI);
+        fondo = new Fondo(vp, pI);
 
         pelota = new CirculoRebotante(x, y, dx, dy);
         timer = new Timer(DELAY, this);
@@ -66,6 +66,8 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
     // getters y setters
 
     // metodos
+
+    // metodo que pinta todos los componentes necesarios para el juego
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -85,6 +87,7 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
         fondo.pintarCRT(g2d);
     }
 
+    // metodo que detecta la accion de cada evento que haya
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -109,6 +112,7 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
         repaint();
     }
 
+    // metodo que detecta que estas pulsando la tecla para subir o bajar
     @Override
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
@@ -130,6 +134,7 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
         }
     }
 
+    // metodo que detecta que has dejado de pulsar la tecla para subir o bajar
     @Override
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {
@@ -154,19 +159,17 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
     public void keyTyped(KeyEvent e) {
     }// no lo utilizo, pero necesita ser implementado
 
+    // metodo que comprueba el choque entre las palas y la pelota
     protected void comprobarChoque() {
+
+        // si rebota en la pala izq
         if (pelota.getX() < palaIzq.getX() + palaIzq.getAncho() &&
                 pelota.getX() + pelota.getAncho() > palaIzq.getX() &&
                 pelota.getY() < palaIzq.getY() + palaIzq.getAlto() &&
                 pelota.getY() + pelota.getAlto() > palaIzq.getY()) {
 
-            nuevaVelocidadX = pelota.getDX();
-
-            if (nuevaVelocidadX < 0) {
-                nuevaVelocidadX = nuevaVelocidadX * -1;
-            }
-
-            cambioVY();
+            cambioVX();// cambia la direccion horizontal de la pelota
+            cambioVY();// tambien la direccion vertical de la pelota
 
             pelota.setDY(nuevaVelocidadY);
             pelota.setDX(nuevaVelocidadX + 1); // esto hace que la pelota rebote
@@ -174,26 +177,33 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
                                                                   // pala
         }
 
+        // lo mismo, pero con la palaDer
         if (pelota.getX() < palaDer.getX() + palaDer.getAncho() &&
                 pelota.getX() + pelota.getAncho() > palaDer.getX() &&
                 pelota.getY() < palaDer.getY() + palaDer.getAlto() &&
                 pelota.getY() + pelota.getAlto() > palaDer.getY()) {
 
-            nuevaVelocidadX = pelota.getDX();
-
-            if (nuevaVelocidadX > 0) {
-                nuevaVelocidadX = nuevaVelocidadX * -1;
-            }
-
+            cambioVX();
             cambioVY();
 
             pelota.setDY(nuevaVelocidadY);
-            pelota.setDX(nuevaVelocidadX - 1); // esto hace que la pelota rebote
-            pelota.setX(palaDer.getX() - pelota.getAncho() - 1); // esto hace que la pelota no se quede pegada en la
-                                                                 // pala
+            pelota.setDX(nuevaVelocidadX - 1);
+            pelota.setX(palaDer.getX() - pelota.getAncho() - 1);
+        }
+    }
+    // metodo que cambia la direccion de la pelota horizontalmente
+    protected void cambioVX() {
+        nuevaVelocidadX = pelota.getDX();
+
+        if (nuevaVelocidadX < 0) { //si la pelota esta yendo hacia la izq
+            nuevaVelocidadX = nuevaVelocidadX * -1; //cambia direccion
+
+        } else if (nuevaVelocidadX > 0) { //si la pelota esta yendo hacia la der
+            nuevaVelocidadX = nuevaVelocidadX * -1; //cambia direccion
         }
     }
 
+    //lo mismo de antes pero en vertical
     protected void cambioVY() {
         nuevaVelocidadY = pelota.getDY();
 
@@ -204,20 +214,25 @@ public class PanelJuego extends JPanel implements ActionListener, KeyListener {
         }
     }
 
-    protected void comprobarGol(){
-        if (pelota.getX()<=0) {
+    //metodo para comprobar el gol
+    protected void comprobarGol() {
+        if (pelota.getX() <= 0) { //si la pelota toca el borde izq 
+
+            //reinicia la pelota al medio mirando hacia j2 y le suma el contador a j2
             fondo.setContadorj2(1);
             pelota.setX(x);
             pelota.setY(y);
             pelota.setDX(dx);
             pelota.setDY(dy);
         }
-        if (pelota.getX()+pelota.getAncho()>=vp.getAnchoVentana()) {
+        if (pelota.getX() + pelota.getAncho() >= vp.getAnchoVentana()) {//si la pelota toca el borde der 
+
+            //reinicia la pelota al medio mirando hacia j1 y le suma el contador a j1
             fondo.setContadorj1(1);
             pelota.setX(x);
             pelota.setY(y);
-            pelota.setDX(dx);
-            pelota.setDY(dy);
+            pelota.setDX(-dx);
+            pelota.setDY(-dy);
         }
     }
 }

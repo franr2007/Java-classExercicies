@@ -17,9 +17,11 @@ public class VentanaInstrucciones extends JFrame{
         setLayout(new GridBagLayout());
         getContentPane().setBackground(new Color(100, 35, 35));
 
+        //constantes grid
         g = new GridBagConstraints();
 
-        texto = new JTextArea(
+        //texto instrucciones
+        texto = new JTextArea( 
                 "INSTRUCCIONES\n\n" +
                         "Dos jugadores se enfrentan controlando cada uno una pala\n" +
                         "para evitar que la pelota salga por su lado.\n\n" +
@@ -32,23 +34,22 @@ public class VentanaInstrucciones extends JFrame{
                         "OBJETIVO:\n" +
                         "Golpea la pelota con tu pala y evita que pase por tu lado.\n\n" +
                         "¡Buena suerte!");
-        texto.setEditable(false);
-        texto.setFocusable(false);
-        texto.setFont(new Font("Comic Sans", Font.PLAIN, 11));
-
+        texto.setEditable(false);//no es editable el txt
+        texto.setFocusable(false);//no puede haber focus en el txt
+        texto.setFont(new Font("Monospace", Font.PLAIN, 11)); //fuente del txt
+        
+        //panel para integrar el txt
         panelGeneral = new JPanel();
         panelGeneral.setSize(100, 100);
         panelGeneral.setBackground(Color.gray);
         panelGeneral.add(texto);
-
+        
+        //añadir a la ventana
         g.gridx = 0;
         g.gridy = 0;
         add(panelGeneral);
-
+        
+        //la pone visible
         setVisible(true);
     }
-    // getters y setters
-
-    // metodos
-    
 }
