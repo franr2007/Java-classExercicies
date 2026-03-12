@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class GestioVols implements IGestioPassatgers {
     //atributos
-    ArrayList<String> llistaPassatgers;
+    private ArrayList<String> llistaPassatgers;
 
     //constructor
     public GestioVols(){
