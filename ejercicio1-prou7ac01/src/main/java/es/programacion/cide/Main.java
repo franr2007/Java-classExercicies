@@ -15,16 +15,18 @@ public class Main {
         File directorio;
 
         sc = new Scanner(System.in);
+        System.out.println("Pun una ruta (assegurese que sus directorios no tengan accento)");
         ruta = sc.nextLine();
         directorio= new File(ruta);
 
-        if (directorio.exists() && directorio.isDirectory()) {
+        try {
+            if (directorio.exists() && directorio.isDirectory()) {
             String[] contenido = directorio.list();
             for(String archivo:contenido){
                 System.out.println(archivo);
             }
         }
-        else{
+        } catch (Exception e) {
             System.out.println("La ruta no existe o no es un directorio");
         }
         
