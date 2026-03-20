@@ -5,57 +5,37 @@ import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
-        //atributos
+        // atributos
         JFrame ventana;
-        JPanel panelGeneral;
-        GridBagConstraints g;
-        JButton botonCrear;
-        JButton botonAbrir;
-        JButton botonGuardar;
-        JButton botonGuardarComo;
-        int altoBtn;
-        int anchobtn;
+        Botones panelBotones;
+        TextArea editorTxt;
 
-        ventana=new JFrame("Editor de texto");
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        ventana = new JFrame("Editor de texto");
         ventana.setLayout(new BorderLayout());
-        ventana.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        ventana.setSize(new Dimension(800, 700));
+        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ventana.setLocationRelativeTo(null);
+        ventana.setResizable(false);
+        ;
 
-        panelGeneral=new JPanel();
-        panelGeneral.setLayout(new GridBagLayout());
+        panelBotones = new Botones();
+        panelBotones.setBackground(new Color(180, 205, 235));
 
-        altoBtn=100;
-        anchobtn=500;
+        editorTxt = new TextArea();
+        editorTxt.setBackground(new Color(240, 245, 252));
+        editorTxt.setForeground(new Color(26, 46, 80));
+        editorTxt.setFont(new Font("MonoSpace", 0, 18));
 
-        g=new GridBagConstraints();
-        g.insets=new Insets(25,25, 25, 25);
-
-        botonCrear=new JButton("Nuevo");
-        botonCrear.setPreferredSize(new Dimension(anchobtn,altoBtn));
-
-        botonAbrir=new JButton("Abrir");
-        botonAbrir.setPreferredSize(new Dimension(anchobtn,altoBtn));
-
-        botonGuardar=new JButton("Guardar");
-        botonGuardar.setPreferredSize(new Dimension(anchobtn,altoBtn));
-
-        botonGuardarComo=new JButton("Guardar como");
-        botonGuardarComo.setPreferredSize(new Dimension(anchobtn,altoBtn));
-
-        g.gridx=0;
-        g.gridy=0;
-        panelGeneral.add(botonCrear,g);
-        g.gridx=1;
-        g.gridy=0;
-        panelGeneral.add(botonAbrir,g);
-        g.gridx=0;
-        g.gridy=1;
-        panelGeneral.add(botonGuardar,g);
-        g.gridx=1;
-        g.gridy=1;
-        panelGeneral.add(botonGuardarComo,g);
-        
-        ventana.add(panelGeneral, BorderLayout.CENTER);
+        ventana.add(panelBotones, BorderLayout.NORTH);
+        ventana.add(editorTxt, BorderLayout.CENTER);
 
         ventana.setVisible(true);
     }
+
 }
