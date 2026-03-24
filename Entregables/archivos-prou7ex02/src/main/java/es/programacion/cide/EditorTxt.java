@@ -9,9 +9,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.TextArea;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -116,11 +116,12 @@ public class EditorTxt extends JPanel {
         // usuario
         if (selector.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) { // y si a seleccionado un archivo entonces
                                                                             // hace lo siguiente:
+            archivoActual=selector.getSelectedFile();
             try {
-                archivoActual = selector.getSelectedFile();
-                String contenido = Files.readString(selector.getSelectedFile().toPath());// esto coje el contenido del
-                                                                                         // texto
-                area.setText(contenido);// mete el contenido anterior en el area
+                FileInputStream leerArchivo = new FileInputStream(archivoActual); //abre el archivo para leerlo
+                byte[] bytes = leerArchivo.readAllBytes();//lee todos los bytes del archivo
+                area.setText(new String(bytes));//añade el texto de bytes pasados a string al area
+                leerArchivo.close();//cierra el archivo
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -130,9 +131,9 @@ public class EditorTxt extends JPanel {
     public void guardar() {
         if (archivoActual != null) {// Si ya se ha abierto un archivo, hace la funcion de guardar
             try {
-                FileWriter escribirArchivo = new FileWriter(selector.getSelectedFile());// creo esta var, que coje el
+                FileOutputStream escribirArchivo = new FileOutputStream(archivoActual);// creo esta var, que coje el
                                                                                         // archivo y lo abre
-                escribirArchivo.write(area.getText());// aqui escribre en el archivo lo que hay en el txtarea
+                escribirArchivo.write(area.getText().getBytes());// aqui escribre en el archivo lo que hay en el txtarea cogiendo sus bytes
                 escribirArchivo.close();// cierra el archivo
             } catch (IOException e) {
                 e.printStackTrace();
@@ -153,8 +154,8 @@ public class EditorTxt extends JPanel {
             }
             try {
                 // guarda lo que haya en el txtarea el archivo
-                FileWriter escribirArchivo = new FileWriter(archivoActual);
-                escribirArchivo.write(area.getText());
+                FileOutputStream escribirArchivo = new FileOutputStream(archivoActual);
+                escribirArchivo.write(area.getText().getBytes());
                 escribirArchivo.close();
             } catch (IOException e) {
                 e.printStackTrace();
