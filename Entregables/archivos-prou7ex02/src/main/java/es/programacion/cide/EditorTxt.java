@@ -8,6 +8,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.TextArea;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 
@@ -27,6 +29,8 @@ public class EditorTxt extends JPanel {
     private Font fuente;
     private TextArea area;
     private JPanel panelBotones;
+    private JFileChooser selector;
+    private File archivoActual;
 
     // constructor
     public EditorTxt() {
@@ -51,9 +55,11 @@ public class EditorTxt extends JPanel {
 
         botonGuardar = new JButton("GUARDAR 💾");
         botonGuardar.setPreferredSize(new Dimension(anchobtn, altoBtn));
+        botonGuardar.addActionListener(e -> guardar());
 
         botonGuardarComo = new JButton("GUARDAR COMO 💾+");
         botonGuardarComo.setPreferredSize(new Dimension(anchobtn, altoBtn));
+        botonGuardarComo.addActionListener(e -> guardarComo());
 
         area = new TextArea();
 
@@ -100,15 +106,21 @@ public class EditorTxt extends JPanel {
     }
 
     public void nuevo() {
-        area.setText("");
+        area.setText("");// limpia el txt
+        archivoActual = null;// no hay ningun archivo seleccionado
     }
 
     public void abrir() {
-        JFileChooser selector = new JFileChooser(); //abre el explorador de archivos
-        if (selector.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) { //mira si se ha elegido algun archivo
+        selector = new JFileChooser(); // Crea la var para explorador de archvos
+        // showOpenDialog abre el win explorer y devuelve un valor segun la eleccion del
+        // usuario
+        if (selector.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) { // y si a seleccionado un archivo entonces
+                                                                            // hace lo siguiente:
             try {
-                String contenido = Files.readString(selector.getSelectedFile().toPath());//esto coje el contenido del texto
-                area.setText(contenido);//mete el contenido anterior en el area
+                archivoActual = selector.getSelectedFile();
+                String contenido = Files.readString(selector.getSelectedFile().toPath());// esto coje el contenido del
+                                                                                         // texto
+                area.setText(contenido);// mete el contenido anterior en el area
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -116,11 +128,38 @@ public class EditorTxt extends JPanel {
     }
 
     public void guardar() {
-
+        if (archivoActual != null) {// Si ya se ha abierto un archivo, hace la funcion de guardar
+            try {
+                FileWriter escribirArchivo = new FileWriter(selector.getSelectedFile());// creo esta var, que coje el
+                                                                                        // archivo y lo abre
+                escribirArchivo.write(area.getText());// aqui escribre en el archivo lo que hay en el txtarea
+                escribirArchivo.close();// cierra el archivo
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else { // si no llama a la funcion guardar como
+            guardarComo();
+        }
     }
 
     public void guardarComo() {
-
+        selector = new JFileChooser();
+        if (selector.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) { // abre el win explorer pero con la opcion
+                                                                            // de guardar el archivo
+            archivoActual = selector.getSelectedFile(); // coge el archivo seleccionado
+            if (!archivoActual.getName().endsWith(".txt")) {// si el archivo no tiene .txt
+                archivoActual = new File(archivoActual.getAbsolutePath() + ".txt");// se le añade .txt al final del
+                                                                                   // nombre dado
+            }
+            try {
+                // guarda lo que haya en el txtarea el archivo
+                FileWriter escribirArchivo = new FileWriter(archivoActual);
+                escribirArchivo.write(area.getText());
+                escribirArchivo.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

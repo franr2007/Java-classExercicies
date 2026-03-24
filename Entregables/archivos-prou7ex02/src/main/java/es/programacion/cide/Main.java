@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
         // atributos
         JFrame ventana;
-        EditorTxt panelBotones;
+        EditorTxt panelEditorTxt;
         
 
         try {
@@ -24,10 +24,10 @@ public class Main {
         ventana.setResizable(false);
         ;
 
-        panelBotones = new EditorTxt();
-        panelBotones.setBackground(new Color(180, 205, 235));
+        panelEditorTxt = new EditorTxt();
+        panelEditorTxt.setBackground(new Color(180, 205, 235));
 
-        ventana.add(panelBotones, BorderLayout.CENTER);
+        ventana.add(panelEditorTxt, BorderLayout.CENTER);
 
         ventana.setVisible(true);
     }
