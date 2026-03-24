@@ -6,9 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
-//41663903R
 //Francisco Javier Rodriguez
-//16-02-26
 
 public class Fondo {
     // Atributos

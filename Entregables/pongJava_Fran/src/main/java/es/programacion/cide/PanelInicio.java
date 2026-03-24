@@ -7,9 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-//41663903R
 //Francisco Javier Rodriguez
-//16-02-26
 
 public class PanelInicio extends JPanel {
     // Atributos

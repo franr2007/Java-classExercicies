@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+//Francisco Javier Rodriguez
+
 class JocPanel extends JPanel {
     private NauEspacial nau; // Nau espacial del jugador
     private List<Asteroide> asteroides; // Llista d'asteroides

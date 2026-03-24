@@ -2,7 +2,6 @@ package es.cide.programacion;
 
 import java.util.Random;
 
-//41663903R
 //Francisco Javier Rodriguez
 
 public class Pirata {

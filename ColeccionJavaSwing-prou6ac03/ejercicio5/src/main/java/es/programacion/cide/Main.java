@@ -4,9 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-//41663903R
-//Francisco Javier Rodriguez Magaña
-//30-01-26
+//Francisco Javier Rodriguez
 
 public class Main {
     public static void main(String[] args) {

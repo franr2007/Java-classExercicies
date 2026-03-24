@@ -2,6 +2,8 @@ package es.cide.programacion;
 
 import java.util.Random;
 
+//Francisco Javier Rodriguez
+
 public class Moto extends Vehicle implements Energia {
     // atributos
     private Random rm = new Random();

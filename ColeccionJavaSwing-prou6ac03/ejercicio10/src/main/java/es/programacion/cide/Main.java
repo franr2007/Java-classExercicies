@@ -5,9 +5,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
-//41663903R
-//Francisco Javier Rodriguez Magaña
-//03-02-26
+//Francisco Javier Rodriguez
 
 public class Main {
     public static void main(String[] args) {

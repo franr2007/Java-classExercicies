@@ -5,9 +5,7 @@ import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-//41663903R
-//Francisco Javier Rodriguez Magaña
-//30-01-26
+//Francisco Javier Rodriguez
 
 public class Main {
     public static void main(String[] args) {

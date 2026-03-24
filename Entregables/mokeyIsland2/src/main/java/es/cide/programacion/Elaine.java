@@ -1,6 +1,5 @@
 package es.cide.programacion;
 
-//41663903R
 //Francisco Javier Rodriguez
 
 public class Elaine extends Heroi {

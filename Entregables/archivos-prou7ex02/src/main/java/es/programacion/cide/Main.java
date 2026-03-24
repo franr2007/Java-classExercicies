@@ -3,6 +3,8 @@ package es.programacion.cide;
 import javax.swing.*;
 import java.awt.*;
 
+//Francisco Javier Rodriguez
+
 public class Main {
     public static void main(String[] args) {
         // atributos

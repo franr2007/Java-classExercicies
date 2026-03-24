@@ -3,9 +3,7 @@ package es.cide.programacion14;
 import java.util.Random;
 import java.util.Scanner;
 
-//41663903R
 //Francisco Javier Rodriguez
-//23-10-25
 
 public class Main {
     public static void main(String[] args) {

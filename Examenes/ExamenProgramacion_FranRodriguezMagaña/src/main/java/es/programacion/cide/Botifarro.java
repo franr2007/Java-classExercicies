@@ -2,9 +2,7 @@ package es.programacion.cide;
 
 import java.util.Random;
 
-//DNI 41663903R
-//Francisco Javier Rodriguez Magaña
-//13-01-26
+//Francisco Javier Rodriguez
 
 public class Botifarro extends Torrada {//Subclase de torrada, Botifarro
     //atributos

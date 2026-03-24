@@ -4,9 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Scanner;
 
-//41663903R
-//francisco javier rodriguez magaña
-//18-03-26
+//Francisco Javier Rodriguez
 
 public class Main {
     public static void main(String[] args) {

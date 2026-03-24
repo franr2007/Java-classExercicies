@@ -4,9 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-//41663903R
-//Francisco Javier Rodriguez Magaña
-//04-02-2026
+//Francisco Javier Rodriguez
 
 public class CalculadoraVisual extends JPanel {
     // Atributos

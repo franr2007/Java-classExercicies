@@ -3,8 +3,7 @@ package es.cide.programacion;
 import java.util.Random;
 import java.util.Scanner;
 
-//Francisco Javier Rodriguez Magaña
-//02/12/25
+//Francisco Javier Rodriguez
 
 public class Main {
     public static void main(String[] args) {

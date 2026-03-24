@@ -12,10 +12,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
+
+//Francisco Javier Rodriguez
 
 public class EditorTxt extends JPanel {
     // atributos

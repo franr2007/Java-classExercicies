@@ -1,6 +1,5 @@
 package es.cide.programacion;
 
-//41663903R
 //Francisco Javier Rodriguez
 
 public abstract class Personatge {//Clase padre de heroi y pirata

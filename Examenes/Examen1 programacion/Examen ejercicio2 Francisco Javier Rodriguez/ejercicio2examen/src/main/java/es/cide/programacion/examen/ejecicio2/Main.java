@@ -4,7 +4,6 @@ import java.util.Random;
 import java.util.Scanner;
 
 //Francisco Javier Rodriguez
-//41663903R
 
 public class Main {
     public static void main(String[] args) {

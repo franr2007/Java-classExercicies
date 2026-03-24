@@ -1,5 +1,7 @@
 package es.cide.programacion;
 
+//Francisco Javier Rodriguez
+
 public class Robot {
     // Atributos
     private String nom;

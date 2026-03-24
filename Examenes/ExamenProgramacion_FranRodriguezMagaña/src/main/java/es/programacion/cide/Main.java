@@ -1,8 +1,6 @@
 package es.programacion.cide;
 
-//DNI 41663903R
-//Francisco Javier Rodriguez Magaña
-//13-01-26
+//Francisco Javier Rodriguez
 
 public class Main {
     public static void main(String[] args) {

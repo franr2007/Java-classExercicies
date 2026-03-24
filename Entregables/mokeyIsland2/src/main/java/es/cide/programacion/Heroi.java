@@ -2,7 +2,6 @@ package es.cide.programacion;
 
 import java.util.Scanner;
 
-//41663903R
 //Francisco Javier Rodriguez
 
 public abstract class Heroi extends Personatge implements Fight, Speak { //Clase padre de Guybrush y elaine

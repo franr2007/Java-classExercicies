@@ -7,9 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-//41663903R
 //Francisco Javier Rodriguez
-//16-02-26
 
 public class PanelJuego extends JPanel implements ActionListener, KeyListener {
     // atributos

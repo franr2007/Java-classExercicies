@@ -2,11 +2,8 @@ package es.programacion.cide;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.concurrent.Flow;
 
-//41663903R
-//Francisco Javier Rodriguez Magaña
-//02-02-26
+//Francisco Javier Rodriguez
 
 public class Main {
     public static void main(String[] args) {

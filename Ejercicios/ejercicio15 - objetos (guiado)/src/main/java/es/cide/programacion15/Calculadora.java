@@ -1,6 +1,5 @@
 package es.cide.programacion15;
 
-//41663903R
 //Francisco Javier Rodriguez
 
 public class Calculadora {

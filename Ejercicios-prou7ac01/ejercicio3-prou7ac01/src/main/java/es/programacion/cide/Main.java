@@ -3,6 +3,8 @@ package es.programacion.cide;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+//Francisco Javier Rodriguez
+
 public class Main {
     public static void main(String[] args) {
         String texto;

@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
 
+//Francisco Javier Rodriguez
+
 public class Estrelles {
     private int x, y; // Posició de l'estrella
     private final int ancho = 2; // Radi de l'estrella

@@ -1,6 +1,5 @@
 package es.cide.ejemploexeceptions.programacion;
 
-//41663903R
 //Francisco Javier Rodriguez
 
 public class Main {

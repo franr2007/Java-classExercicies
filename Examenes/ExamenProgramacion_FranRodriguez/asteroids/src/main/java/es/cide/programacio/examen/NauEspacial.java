@@ -4,6 +4,8 @@ import java.awt.*;
 
 import javax.swing.ImageIcon;
 
+//Francisco Javier Rodriguez
+
 class NauEspacial {
     private int x, y; // Posició de la nau espacial
     private final int ample = 40; // Ample de la nau espacial

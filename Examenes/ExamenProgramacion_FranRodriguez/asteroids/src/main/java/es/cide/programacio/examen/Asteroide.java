@@ -5,6 +5,8 @@ import java.util.Random;
 
 import javax.swing.ImageIcon;
 
+//Francisco Javier Rodriguez
+
 class Asteroide {
     private int x, y; // Posició de l'asteroide
     private int radi = 20; // Radi de l'asteroide

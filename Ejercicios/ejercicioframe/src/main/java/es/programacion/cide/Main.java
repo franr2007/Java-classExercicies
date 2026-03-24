@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;;
 
-//41663903R
 //Francisco Javier Rodriguez
 
 public class Main {

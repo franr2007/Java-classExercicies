@@ -3,9 +3,7 @@ package es.programacion.cide;
 import java.awt.*;
 import javax.swing.*;
 
-//41663903R
-//Francisco Javier Rodriguez Magaña
-//04-02-2026
+//Francisco Javier Rodriguez
 
 public class Main {
     public static void main(String[] args) {

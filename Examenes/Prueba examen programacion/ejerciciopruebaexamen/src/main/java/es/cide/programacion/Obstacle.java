@@ -2,6 +2,8 @@ package es.cide.programacion;
 
 import java.util.Random;
 
+//Francisco Javier Rodriguez
+
 public class Obstacle {
     // atributos
     private Random aleatorio = new Random();

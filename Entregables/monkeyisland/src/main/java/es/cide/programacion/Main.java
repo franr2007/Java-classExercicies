@@ -2,9 +2,7 @@ package es.cide.programacion;
 
 import java.util.Scanner;
 
-//41663903R
 //Francisco Javier Rodriguez
-//20-11-25
 
 public class Main {
         public static void main(String[] args) {

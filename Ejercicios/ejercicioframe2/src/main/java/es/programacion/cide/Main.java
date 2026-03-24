@@ -3,7 +3,6 @@ package es.programacion.cide;
 import javax.swing.*;
 import java.awt.*;
 
-//41663903R
 //Francisco Javier Rodriguez
 
 public class Main {

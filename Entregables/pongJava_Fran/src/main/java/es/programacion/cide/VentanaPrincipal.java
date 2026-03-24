@@ -3,9 +3,7 @@ package es.programacion.cide;
 import javax.swing.*;
 import java.awt.*;
 
-//41663903R
 //Francisco Javier Rodriguez
-//16-02-26
 
 public class VentanaPrincipal extends JFrame {
     // Atributos

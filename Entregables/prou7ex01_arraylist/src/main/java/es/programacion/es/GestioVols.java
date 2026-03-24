@@ -2,6 +2,8 @@ package es.programacion.es;
 
 import java.util.ArrayList;
 
+//Francisco Javier Rodriguez
+
 public class GestioVols implements IGestioPassatgers {
     //atributos
     private ArrayList<String> llistaPassatgers;

@@ -1,8 +1,6 @@
 package es.programacion.cide;
 
-//DNI 41663903R
-//Francisco Javier Rodriguez Magaña
-//13-01-26
+//Francisco Javier Rodriguez
 
 public class Torrada implements Menjar,Graella{//Superclase Torrada
     //atributos

@@ -3,9 +3,7 @@ package es.programacion.cide;
 import java.io.File;
 import java.util.Scanner;
 
-//41663903R
-//francisco javier rodriguez magaña
-//19-03-26
+//Francisco Javier Rodriguez
 
 public class Main {
     public static void main(String[] args) {

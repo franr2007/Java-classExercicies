@@ -2,6 +2,8 @@ package es.cide.programacio.examen;
 
 import javax.swing.*;
 
+//Francisco Javier Rodriguez
+
 public class Joc {
     public static void main(String[] args) {
         // Crea la finestra principal

@@ -1,5 +1,7 @@
 package es.programacion.es;
 
+//Francisco Javier Rodriguez
+
 public interface IGestioPassatgers {
     /** Afegeix un passatger a la llista */
     void registrarPassatger(String nom);
