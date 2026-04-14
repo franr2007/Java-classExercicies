@@ -1,7 +1,6 @@
 package es.programacion.cide;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,7 +10,6 @@ public class PanelInicio extends JPanel {
     private GridBagConstraints g;
     private JPanel panelTitulo;
     private JPanel panelLogIn;
-    private Border borde;
     private GridBagConstraints gt;
     private Font fuenteTxt;
     private JLabel titulo;
@@ -24,6 +22,7 @@ public class PanelInicio extends JPanel {
     private VentanaPrincipal vp;
     private ImageIcon imagenOriginal;
     private Image fondo;
+    private Dimension labelSize;
 
     // constructor
     public PanelInicio(VentanaPrincipal ventanaPrincipal) {
@@ -33,6 +32,10 @@ public class PanelInicio extends JPanel {
         setOpaque(false);
 
         this.vp = ventanaPrincipal;
+
+        // imagen de fondo del panel
+        imagenOriginal = new ImageIcon(getClass().getResource("/fondo.jpg"));
+        fondo = imagenOriginal.getImage();
 
         // constantes grid para el panel
         g = new GridBagConstraints();
@@ -49,12 +52,9 @@ public class PanelInicio extends JPanel {
         panelLogIn.setLayout(new GridBagLayout());
         panelLogIn.setOpaque(false);
 
-        // borde estetico
-        borde = BorderFactory.createLineBorder(Color.white, 2);
-
         // constantes grid para panelLogIn
         gt = new GridBagConstraints();
-        gt.insets = new Insets(20, 0, 20, 0);
+        gt.insets = new Insets(5, 5, 5, 5);
 
         // fuente para los textos
         fuenteTxt = new Font("Courier New", 1, 20);
@@ -62,14 +62,17 @@ public class PanelInicio extends JPanel {
         // titulo
         titulo = new JLabel("· Gestionador de datos ·");
 
+        // tamaño del label
+        labelSize = new Dimension(150, 25);
+
         // entrada para que el jugador1 ponga su nombre
         textoEmail = new JLabel("Email: ");
-        textoEmail.setBorder(borde);
+        textoEmail.setPreferredSize(labelSize);
         fieldEmail = new JTextField(40);
 
         // entrada para que ponga la contraseña el usuario
         textoPassword = new JLabel("Contraseña: ");
-        textoPassword.setBorder(borde);
+        textoPassword.setPreferredSize(labelSize);
         fieldPassword = new JTextField(40);
 
         // boton para Logearse
@@ -96,12 +99,11 @@ public class PanelInicio extends JPanel {
         gt.gridy = 0;
         gt.anchor = GridBagConstraints.LINE_END;
         gt.fill = GridBagConstraints.NONE;
+        gt.weightx = 0;
         panelLogIn.add(textoEmail, gt);
         gt.gridx = 1;
         gt.gridy = 0;
         gt.anchor = GridBagConstraints.LINE_START;
-        gt.fill = GridBagConstraints.HORIZONTAL;
-        gt.weightx = 1;
         panelLogIn.add(fieldEmail, gt);
         gt.gridx = 0;
         gt.gridy = 1;
@@ -112,28 +114,26 @@ public class PanelInicio extends JPanel {
         gt.gridx = 1;
         gt.gridy = 1;
         gt.anchor = GridBagConstraints.LINE_START;
-        gt.fill = GridBagConstraints.HORIZONTAL;
-        gt.weightx = 1;
         panelLogIn.add(fieldPassword, gt);
 
         g.gridx = 0;
         g.gridy = 0;
         g.gridwidth = 2;
         g.anchor = GridBagConstraints.CENTER;
-        g.insets = new Insets(0, 10, 10, 10);
+        g.insets = new Insets(0, 10, 30, 10);
         add(panelTitulo, g);
         g.gridx = 0;
         g.gridy = 1;
         g.gridwidth = 2;
         g.anchor = GridBagConstraints.CENTER;
-        g.insets = new Insets(10, 10, 10, 10);
+        g.insets = new Insets(30, 10, 10, 10);
         add(panelLogIn, g);
         g.gridx = 0;
         g.gridy = 2;
         g.gridwidth = 2;
         g.anchor = GridBagConstraints.CENTER;
         g.fill = GridBagConstraints.NONE;
-
+        g.insets = new Insets(10, 10, 10, 10);
         add(btnLogIn, g);
     }
 
@@ -153,34 +153,28 @@ public class PanelInicio extends JPanel {
         for (int i = 0; i < arrayButtons.length; i++) { // este for, recorre todo el array botones y les assigna los
                                                         // estilos siguientes
             arrayButtons[i].setFont(fuenteTxt);
-            arrayButtons[i].setBorder(borde);
             arrayButtons[i].setForeground(Color.white);
-            arrayButtons[i].setBackground(Color.red);
+            arrayButtons[i].setBackground(Color.gray);
         }
 
         // estilos textos
         textoEmail.setFont(fuenteTxt);
-        textoEmail.setForeground(Color.white);
+        textoEmail.setForeground(Color.black);
         textoPassword.setFont(fuenteTxt);
-        textoPassword.setForeground(Color.white);
+        textoPassword.setForeground(Color.black);
 
         // estilo titulo
-        fuenteTxt = new Font("Monospace", 1, 100);
+        fuenteTxt = new Font("SansSerif", Font.BOLD, 100);
         titulo.setFont(fuenteTxt);
-        titulo.setForeground(Color.white);
+        titulo.setForeground(Color.LIGHT_GRAY);
     }
 
     // pinta el fondo
     @Override
     protected void paintComponent(Graphics g) { // pinta el fondo
         super.paintComponent(g);
-        if (fondo == null) {
-            setBackground(Color.white);
-        } else {
-            // imagen de fondo del panel
-            imagenOriginal = new ImageIcon(getClass().getResource("/fondo_pong.jpg"));
-            fondo = imagenOriginal.getImage();
-            g.drawImage(fondo, 0, 0, vp.getAnchoVentana() + 100, vp.getAltoVentana() + 100, null);
+        if (fondo != null) {
+            g.drawImage(fondo, 0, 0, getWidth(), getHeight(), this);
         }
     }
 }
