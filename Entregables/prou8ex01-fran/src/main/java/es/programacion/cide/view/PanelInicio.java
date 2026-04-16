@@ -1,4 +1,4 @@
-package es.programacion.cide;
+package es.programacion.cide.view;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +19,6 @@ public class PanelInicio extends JPanel {
     private JTextField fieldPassword;
     private JButton btnLogIn;
     private JButton[] arrayButtons;
-    private VentanaPrincipal vp;
     private ImageIcon imagenOriginal;
     private Image fondo;
     private Dimension labelSize;
@@ -30,8 +29,6 @@ public class PanelInicio extends JPanel {
         setLayout(new GridBagLayout());
         setSize(600, 800);
         setOpaque(false);
-
-        this.vp = ventanaPrincipal;
 
         // imagen de fondo del panel
         imagenOriginal = new ImageIcon(getClass().getResource("/fondo.jpg"));

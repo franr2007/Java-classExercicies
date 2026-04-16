@@ -1,4 +1,4 @@
-package es.programacion.cide;
+package es.programacion.cide.view;
 
 import javax.swing.*;
 import java.awt.*;
