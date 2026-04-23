@@ -1,11 +1,16 @@
 package es.programacion.cide.DAO;
 
-public interface Dao {
-    //atributos
+import java.util.List;
 
-    //constructor
-
-    //getters y setters
-
+public interface Dao<X, ID> {
     //metodos
+    void insertar(X obj);
+
+    X recojerPorId(ID id);
+
+    List<X> listarTodos();
+
+    void actualizar(X obj);
+
+    void eliminarPorId(ID id);
 }
