@@ -1,11 +1,31 @@
 package es.programacion.cide.DAO;
+import java.util.List;
+import es.programacion.cide.model.Plaza;
 
-public class PlazaDao {
-    //atributos
+public class PlazaDao implements Dao<Plaza, Integer> {
 
-    //constructor
+    @Override
+    public void insertar(Plaza valor) {
+        
+    }
 
-    //getters y setters
+    @Override
+    public Plaza recojerPorId(Integer codi) {
+        return null;
+    }
 
-    //metodos
+    @Override
+    public List<Plaza> listarTodos() {
+        return null;
+    }
+
+    @Override
+    public void editar(Plaza valor) {
+            
+    }
+
+    @Override
+    public void eliminarPorId(Integer codi) {
+            
+    }
 }

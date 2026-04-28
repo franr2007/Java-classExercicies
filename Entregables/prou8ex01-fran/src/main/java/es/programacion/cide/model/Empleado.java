@@ -1,59 +1,70 @@
 package es.programacion.cide.model;
 
 public class Empleado {
-    //atributos
+    // atributos
+    private int id;
     private int nss;
     private String nom;
     private String apellidos;
     private String email;
     private String iban;
 
-    //constructor
+    // constructor
     public Empleado() {
     }
 
-    public Empleado(int nss, String nom, String apellidos, String email, String iban) {
-    this.nss = nss;
-    this.nom = nom;
-    this.apellidos = apellidos;
-    this.email = email;
-    this.iban = iban;
+    public Empleado(int id, int nss, String nom, String apellidos, String email, String iban) {
+        this.id = id;
+        this.nss = nss;
+        this.nom = nom;
+        this.apellidos = apellidos;
+        this.email = email;
+        this.iban = iban;
     }
 
-    //getters y setters
-    public int getNss(){
+    // getters y setters
+    public int getId(){
+        return id;
+    }
+
+    public int getNss() {
         return nss;
     }
-    public void setNss(int nss){
-        this.nss=nss;
+
+    public void setNss(int nss) {
+        this.nss = nss;
     }
 
-    public String getNom(){
+    public String getNom() {
         return nom;
     }
-    public void setNom(String nom){
-        this.nom=nom;
+
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 
-    public String getApellidos(){
+    public String getApellidos() {
         return apellidos;
     }
-    public void setApellidos(String apellidos){
-        this.apellidos=apellidos;
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return email;
     }
-    public void setEmail(String email){
-        this.email=email;
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getIban(){
+    public String getIban() {
         return iban;
     }
-    public void setIban(String iban){
-        this.iban=iban;
+
+    public void setIban(String iban) {
+        this.iban = iban;
     }
-    //metodos
+    // metodos
 }

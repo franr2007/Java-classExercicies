@@ -5,12 +5,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class dataBaseManager {
+public class DataBaseManager {
     // atributos
-    private Connection conexion;
+    static Connection conexion;
 
     // constructor
-    public dataBaseManager() {
+    public DataBaseManager() {
         try {
             conexion = DriverManager.getConnection("jdbc:sqlite:miDataBase.db");
         } catch (SQLException e) {
@@ -30,7 +30,7 @@ public class dataBaseManager {
     // getters y setters
 
     // metodos
-    public Connection getConnection() throws SQLException {
+    public static Connection getConnection() throws SQLException {
         if (conexion == null || conexion.isClosed()) {
             conexion = DriverManager.getConnection("jdbc:sqlite:miDataBase.db");
         }
@@ -61,7 +61,8 @@ public class dataBaseManager {
 
             statement.executeQuery("""
                     CREATE TABLE IF NOT EXISTS EMPLEADO(
-                        NSS INTEGER PRIMARY KEY,
+                        ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                        NSS NUMBER,
                         NOM TEXT NOT NULL,
                         APELLIDOS TEXT NOT NULL,
                         EMAIL TEXT,
@@ -93,7 +94,7 @@ public class dataBaseManager {
                     )
                     """);
         } catch (Exception e) {
-            // TODO: handle exception
+            System.err.println("ERROR AL HACER LA BASE DE DATOS");
         }
     }
 }

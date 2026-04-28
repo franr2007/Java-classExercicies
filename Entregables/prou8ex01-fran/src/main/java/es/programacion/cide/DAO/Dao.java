@@ -10,7 +10,7 @@ public interface Dao<X, ID> {
 
     List<X> listarTodos();
 
-    void actualizar(X obj);
+    void editar(X obj);
 
     void eliminarPorId(ID id);
 }
