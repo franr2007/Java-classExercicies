@@ -50,7 +50,7 @@ public class DataBaseManager {
                     CREATE TABLE IF NOT EXISTS PLAZA(
                         CODI INTEGER PRIMARY KEY AUTOINCREMENT,
                         NOM TEXT NOT NULL,
-                        SALARI REAL NOT NULL,
+                        SALARI_REAL NOT NULL,
                         INFORME_SUPERVISIO TEXT,
                         CODI_PLAZA_SUPERVISORA INTEGER,
                         NOM_TIPUS_PLAZA TEXT NOT NULL,

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.programacion.cide.db.DataBaseManager;
-import es.programacion.cide.model.Empleado;
 import es.programacion.cide.model.Nomina;
 
 public class NominaDao implements Dao<Nomina, Integer> {
