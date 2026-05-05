@@ -39,30 +39,31 @@ public class DataBaseManager {
 
     public void crearTablas() {
         try (Statement statement = getConnection().createStatement()) {
-            statement.executeQuery("""
+            statement.executeUpdate("""
                     CREATE TABLE IF NOT EXISTS TIPUS_PLAZA(
-                        NOM TEXT PRIMATY KEY,
+                        ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                        NOM TEXT,
                         FUNCIO TEXT NOT NULL
                     )
                     """);
 
-            statement.executeQuery("""
+            statement.executeUpdate("""
                     CREATE TABLE IF NOT EXISTS PLAZA(
                         CODI INTEGER PRIMARY KEY AUTOINCREMENT,
                         NOM TEXT NOT NULL,
-                        SALARI_REAL NOT NULL,
+                        SALARI REAL NOT NULL,
                         INFORME_SUPERVISIO TEXT,
                         CODI_PLAZA_SUPERVISORA INTEGER,
                         NOM_TIPUS_PLAZA TEXT NOT NULL,
-                        FOREIGN KEY (CODI_PLAZA_SUPERVISORA) REFERENCE PLAZA(CODI),
-                        FOREIGN KEY (NOM_TIPUS_PLAZA) REFERENCE TIPUS_PLAZA(NOM)
+                        FOREIGN KEY (CODI_PLAZA_SUPERVISORA) REFERENCES PLAZA(CODI),
+                        FOREIGN KEY (NOM_TIPUS_PLAZA) REFERENCES TIPUS_PLAZA(NOM)
                     )
                     """);
 
-            statement.executeQuery("""
+            statement.executeUpdate("""
                     CREATE TABLE IF NOT EXISTS EMPLEADO(
                         ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                        NSS NUMBER,
+                        NSS INTEGER,
                         NOM TEXT NOT NULL,
                         APELLIDOS TEXT NOT NULL,
                         EMAIL TEXT,
@@ -70,23 +71,23 @@ public class DataBaseManager {
                     )
                     """);
 
-            statement.executeQuery("""
-                    CREATE TABLE IF NOT EXISTS OCUPA (
+            statement.executeUpdate("""
+                    CREATE TABLE IF NOT EXISTS OCUPA(
+                        ID INTEGER PRIMARY KEY AUTOINCREMENT,
                         NSS_EMPLEADO INTEGER NOT NULL,
                         CODI_PLAZA INTEGER NOT NULL,
                         DATA_INICI TEXT NOT NULL,
                         DATA_FI TEXT,
-                        PRIMARY KEY (NSS_EMPLEADO, CODI_PLAZA),
                         FOREIGN KEY (NSS_EMPLEADO) REFERENCES EMPLEADO(NSS),
                         FOREIGN KEY (CODI_PLAZA) REFERENCES PLAZA(CODI)
                     )
                     """);
 
             statement.executeUpdate("""
-                    CREATE TABLE IF NOT EXISTS NOMINA (
-                        ID_NOMINA INTEGER PRIMARY KEY AUTOINCREMENT,
+                    CREATE TABLE IF NOT EXISTS NOMINA(
+                        ID INTEGER PRIMARY KEY AUTOINCREMENT,
                         IBAN_PAGAMENT TEXT NOT NULL,
-                        IMPORT REAL NOT NULL,
+                        IMPORT_REAL REAL NOT NULL,
                         NSS_EMPLEADO INTEGER NOT NULL,
                         CODI_PLAZA INTEGER NOT NULL,
                         FOREIGN KEY (NSS_EMPLEADO) REFERENCES EMPLEADO(NSS),
