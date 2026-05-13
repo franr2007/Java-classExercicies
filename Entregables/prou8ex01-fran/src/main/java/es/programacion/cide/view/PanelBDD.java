@@ -37,38 +37,4 @@ public class PanelBDD extends JPanel {
     // getters y setters
     
     // metodos
-    private void carregarEmpleats(DefaultTableModel model) {
-        model.setRowCount(0);
-        for (Empleado empleado : empleadoDao.listarTodos()) {
-            model.addRow(new Object[]{empleado.getId(), empleado.getNss(), empleado.getNom(), empleado.getApellidos(), empleado.getEmail(), empleado.getIban()});
-        }
-    }
-
-    private JPanel crearPanelEmpleado(){
-        String[] columnas= {"ID", "NSS", "Nom", "Cognoms", "Email", "IBAN"};
-        DefaultTableModel modeloTabla = new DefaultTableModel();
-        for (int i=0; i< columnas.length;i++){
-            modeloTabla.addColumn(columnas[i]);
-        }
-
-        JTable tabla= new JTable(modeloTabla);
-
-        carregarEmpleats(modeloTabla);
-
-        JTextField buscador= new JTextField();
-        buscador.setToolTipText("Busca por nombre, apellidos o IBAN ...");
-        buscador.addActionListener(e ->{
-            String palabra= buscador.getText().trim().toLowerCase();
-            modeloTabla.setRowCount(0);
-
-            for(Empleado empleado: empleadoDao.listarTodos()){
-                if (empleado.getNom().toLowerCase().contains(palabra) || empleado.getApellidos().toLowerCase().contains(palabra) || empleado.getIban().toLowerCase().contains(palabra)) {
-                    modeloTabla.addRow(new Object[]{
-                        empleado.getId(),empleado.getNss(),empleado.getNom(),empleado.getApellidos(), empleado.getEmail(),empleado.getIban()
-                    });
-                }
-            }
-        });;
-
-    }
 }
