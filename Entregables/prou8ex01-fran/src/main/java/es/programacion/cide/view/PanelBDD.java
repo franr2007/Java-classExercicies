@@ -64,13 +64,11 @@ public class PanelBDD extends JPanel {
             for(Empleado empleado: empleadoDao.listarTodos()){
                 if (empleado.getNom().toLowerCase().contains(palabra) || empleado.getApellidos().toLowerCase().contains(palabra) || empleado.getIban().toLowerCase().contains(palabra)) {
                     modeloTabla.addRow(new Object[]{
-                        empleado.getId(),empleado.getNss(),empleado.getNom(),empleado.getApellidos(), empleado.getEmail(),empleado.getIban();
+                        empleado.getId(),empleado.getNss(),empleado.getNom(),empleado.getApellidos(), empleado.getEmail(),empleado.getIban()
                     });
                 }
             }
         });;
-
-        Jbutton
 
     }
 }

@@ -5,23 +5,28 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
 
-/**
- * PANEL CRUD GENÉRICO
- * Sustituye Empleados, Plazas, Tipos, Ocupa y Nóminas
- */
 public abstract class PanelAbstractoGeneral<T> extends JPanel {
-
+    // atributos
     protected JTable tabla;
     protected DefaultTableModel modelotabla;
     protected JTextField buscador;
 
+    // constructor
     public PanelAbstractoGeneral(String[] columns) {
-        setLayout(new BorderLayout());
+        setLayout(new BorderLayout(0, 8));
 
-        modelotabla = new DefaultTableModel(columns, 0);
+        // modelo de la tabla
+        modelotabla = new DefaultTableModel(columns, 0) {
+            @Override
+            public boolean isCellEditable(int row, int col) {
+                return false; // esto hace que la tabla no sea editable
+            }
+        };
 
-        tabla = new JTable(modelotabla);
-        buscador = new JTextField();
+        // tabla
+        tabla = new JTable(modelotabla); // nueva tabla que coje el modelo que se ha creado antes
+        tabla.setRowHeight(28); // altura de la tabla
+        tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         add(panelBuscador(), BorderLayout.NORTH);
         add(new JScrollPane(tabla), BorderLayout.CENTER);
@@ -30,50 +35,71 @@ public abstract class PanelAbstractoGeneral<T> extends JPanel {
         cargarDatos();
     }
 
-    private JPanel panelBuscador() {
-        JPanel panel = new JPanel(new BorderLayout(6, 0));
-        panel.add(new JLabel("Cercar:"), BorderLayout.WEST);
-        panel.add(buscador, BorderLayout.CENTER);
+    // getters y setters
 
+    // metodos
+
+    //metodo para crear el panel superior
+    private JPanel panelBuscador() {
+        JPanel panel = new JPanel(new BorderLayout(5, 0));
+
+        buscador = new JTextField();
         buscador.addActionListener(e -> buscar(buscador.getText().trim().toLowerCase()));
+
+        JButton btnBuscar = new JButton("Buscar");
+        JButton btnAnadir = new JButton("Añadir");
+        JButton btnActualizar = new JButton("Refrescar");
+
+        btnBuscar.addActionListener(e -> buscar(buscador.getText().trim().toLowerCase()));
+        btnAnadir.addActionListener(e -> anadir());
+        btnActualizar.addActionListener(e -> cargarDatos());
+
+        JPanel btnsDerecha = new JPanel(new FlowLayout(FlowLayout.LEFT, 4, 0));
+        btnsDerecha.add(btnAnadir);
+        btnsDerecha.add(btnActualizar);
+
+        panel.add(buscador, BorderLayout.CENTER);
+        panel.add(btnBuscar, BorderLayout.EAST);
+        panel.add(btnsDerecha, BorderLayout.WEST);
 
         return panel;
     }
 
+    // boton eliminar y editar
     private JPanel panelBotones() {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 6, 0));
 
-        JButton anadir = new JButton("Añadir");
-        JButton editar = new JButton("Editar");
-        JButton eliminar = new JButton("Eliminar");
-        JButton actualizar = new JButton("Actualizar");
+        JButton btnEditar = new JButton("Editar");
+        JButton btnEliminar = new JButton("Eliminar");
 
-        anadir.addActionListener(e -> anadir());
-        editar.addActionListener(e -> editar(getSelectedId()));
-        eliminar.addActionListener(e -> eliminar(getSelectedId()));
-        actualizar.addActionListener(e -> cargarDatos());
+        btnEditar.addActionListener(e -> editar(getIdSeleccionado()));
+        btnEliminar.addActionListener(e -> eliminar(getIdSeleccionado()));
 
-        panel.add(anadir);
-        panel.add(editar);
-        panel.add(eliminar);
-        panel.add(actualizar);
+        // Eliminar en rojo para que destaque visualmente
+        btnEliminar.setForeground(Color.RED);
+
+        panel.add(btnEditar);
+        panel.add(btnEliminar);
 
         return panel;
     }
 
-    protected Integer getSelectedId() {
-        int row = tabla.getSelectedRow();
-        if (row == -1) {
+    // metodo para obtener el id de la tabla
+    protected Integer getIdSeleccionado() {
+        // getselectedrow devuelve -1 si no hay filas seleccionadas o el numero de la fila
+        int fila = tabla.getSelectedRow();
+        //si no hay filas seleccionadas
+        if (fila == -1) {
             JOptionPane.showMessageDialog(this, "Selecciona un registre");
             return null;
         }
-        return (Integer) modelotabla.getValueAt(row, 0);
+        return (Integer) modelotabla.getValueAt(fila, 0);//devuelve el id de la fila
     }
 
-
+    //metodos que los subpaneles implementaran de distinta manera
     protected abstract void cargarDatos();
 
-    protected abstract void buscar(String query);
+    protected abstract void buscar(String elementoABuscar);
 
     protected abstract void anadir();
 
