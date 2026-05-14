@@ -12,6 +12,8 @@ public abstract class PanelAbstractoGeneral<T> extends JPanel {
     protected JTextField buscador;
 
     // constructor
+    // se le pasa un array con en nombre de cada columna, que luego aplicaran las
+    // clases hijas
     public PanelAbstractoGeneral(String[] columns) {
         setLayout(new BorderLayout(0, 8));
 
@@ -39,7 +41,7 @@ public abstract class PanelAbstractoGeneral<T> extends JPanel {
 
     // metodos
 
-    //metodo para crear el panel superior
+    // metodo para crear el panel superior
     private JPanel panelBuscador() {
         JPanel panel = new JPanel(new BorderLayout(5, 0));
 
@@ -65,7 +67,7 @@ public abstract class PanelAbstractoGeneral<T> extends JPanel {
         return panel;
     }
 
-    // boton eliminar y editar
+    // panel de boton eliminar y editar
     private JPanel panelBotones() {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 6, 0));
 
@@ -86,17 +88,18 @@ public abstract class PanelAbstractoGeneral<T> extends JPanel {
 
     // metodo para obtener el id de la tabla
     protected Integer getIdSeleccionado() {
-        // getselectedrow devuelve -1 si no hay filas seleccionadas o el numero de la fila
+        // getselectedrow devuelve -1 si no hay filas seleccionadas o el numero de la
+        // fila
         int fila = tabla.getSelectedRow();
-        //si no hay filas seleccionadas
+        // si no hay filas seleccionadas
         if (fila == -1) {
             JOptionPane.showMessageDialog(this, "Selecciona un registre");
             return null;
         }
-        return (Integer) modelotabla.getValueAt(fila, 0);//devuelve el id de la fila
+        return (Integer) modelotabla.getValueAt(fila, 0);// devuelve el id de la fila
     }
 
-    //metodos que los subpaneles implementaran de distinta manera
+    // metodos que los subpaneles implementaran de distinta manera
     protected abstract void cargarDatos();
 
     protected abstract void buscar(String elementoABuscar);
