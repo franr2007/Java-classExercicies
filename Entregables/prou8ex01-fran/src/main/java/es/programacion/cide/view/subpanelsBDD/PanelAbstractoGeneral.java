@@ -3,9 +3,8 @@ package es.programacion.cide.view.subpanelsBDD;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.List;
 
-public abstract class PanelAbstractoGeneral<T> extends JPanel {
+public abstract class PanelAbstractoGeneral extends JPanel {
     // atributos
     protected JTable tabla;
     protected DefaultTableModel modelotabla;
@@ -33,8 +32,6 @@ public abstract class PanelAbstractoGeneral<T> extends JPanel {
         add(panelBuscador(), BorderLayout.NORTH);
         add(new JScrollPane(tabla), BorderLayout.CENTER);
         add(panelBotones(), BorderLayout.SOUTH);
-
-        cargarDatos();
     }
 
     // getters y setters
@@ -109,6 +106,4 @@ public abstract class PanelAbstractoGeneral<T> extends JPanel {
     protected abstract void editar(Integer id);
 
     protected abstract void eliminar(Integer id);
-
-    protected abstract List<T> listarTodos();
 }

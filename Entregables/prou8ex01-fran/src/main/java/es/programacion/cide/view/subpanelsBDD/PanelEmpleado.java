@@ -1,14 +1,11 @@
 package es.programacion.cide.view.subpanelsBDD;
 
-import java.util.List;
-
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-
 import es.programacion.cide.DAO.EmpleadoDao;
 import es.programacion.cide.model.Empleado;
 
-public class PanelEmpleado extends PanelAbstractoGeneral<Empleado> {
+public class PanelEmpleado extends PanelAbstractoGeneral {
     
     //atributos
     private EmpleadoDao daoEmpleado= new EmpleadoDao();
@@ -16,6 +13,8 @@ public class PanelEmpleado extends PanelAbstractoGeneral<Empleado> {
     //constructor
     public PanelEmpleado(){
         super(new String[]{"ID", "NSS" ,"Nombre", "Apellido", "Email", "IBAN"});
+
+        cargarDatos();
     }
     //getters y setters
 
@@ -59,26 +58,14 @@ public class PanelEmpleado extends PanelAbstractoGeneral<Empleado> {
     @Override
     protected void eliminar(Integer id) {
         if (id == null) return;
-        Empleado emp = daoEmpleado.recojerPorId(id);
-        if (emp == null) return;
 
-        JTextField fieldNss     = new JTextField(String.valueOf(e.getNss()));
-        JTextField fieldNombre     = new JTextField(e.getNom());
-        JTextField fieldApellido = new JTextField(e.getApellidos());
-        JTextField fieldEmail   = new JTextField(e.getEmail());
-        JTextField fieldIban    = new JTextField(e.getIban());
-        Object[] campos = {
-            "NSS:", fieldNss, "Nom:", fieldNombre, "Cognoms:", fieldApellido,
-            "Email:", fieldEmail, "IBAN:", fieldIban
-        };
-        int res = JOptionPane.showConfirmDialog(this, campos, "Editar empleat", JOptionPane.OK_CANCEL_OPTION);
-        if (res == JOptionPane.OK_OPTION) {
-            emp.setNss(Integer.parseInt(fieldNss.getText().trim()));
-            emp.setNom(fieldNombre.getText().trim());
-            emp.setApellidos(fieldApellido.getText().trim());
-            emp.setEmail(fieldEmail.getText().trim());
-            emp.setIban(fieldIban.getText().trim());
-            daoEmpleado.editar(emp);  // aquí usa el DAO
+        int opcion = JOptionPane.showConfirmDialog(this,
+                "Quieres eliminar a este empleado?",
+                "eliminar empleado...",
+                JOptionPane.YES_NO_OPTION);
+
+        if (opcion == JOptionPane.YES_OPTION) {
+            daoEmpleado.eliminarPorId(id);
             cargarDatos();
         }
         
@@ -86,20 +73,51 @@ public class PanelEmpleado extends PanelAbstractoGeneral<Empleado> {
 
     @Override
     protected void editar(Integer id) {
-        // TODO Auto-generated method stub
+        if (id == null) return;
+        Empleado emp = daoEmpleado.recojerPorId(id);
+        if (emp == null) return;
+
+        JTextField fieldNss     = new JTextField(String.valueOf(emp.getNss()));
+        JTextField fieldNombre     = new JTextField(emp.getNom());
+        JTextField fieldApellido = new JTextField(emp.getApellidos());
+        JTextField fieldEmail   = new JTextField(emp.getEmail());
+        JTextField fieldIban    = new JTextField(emp.getIban());
+
+        Object[] campos = {
+            "NSS:", fieldNss, "Nom:", fieldNombre, "Cognoms:", fieldApellido,
+            "Email:", fieldEmail, "IBAN:", fieldIban
+        };
         
+        int res = JOptionPane.showConfirmDialog(this, campos, "Editar empleat", JOptionPane.OK_CANCEL_OPTION);
+        if (res == JOptionPane.OK_OPTION) {
+            emp.setNss(Integer.parseInt(fieldNss.getText().trim()));
+            emp.setNom(fieldNombre.getText().trim());
+            emp.setApellidos(fieldApellido.getText().trim());
+            emp.setEmail(fieldEmail.getText().trim());
+            emp.setIban(fieldIban.getText().trim());
+            daoEmpleado.editar(emp);
+            cargarDatos();
+        }
     }
 
     @Override
     protected void buscar(String elementoABuscar) {
-        // TODO Auto-generated method stub
+         modelotabla.setRowCount(0);
+
+        for (Empleado e : daoEmpleado.listarTodos()) {
+            boolean coincideNombre    = e.getNom().toLowerCase().contains(elementoABuscar);
+            boolean coincideApellidos = e.getApellidos().toLowerCase().contains(elementoABuscar);
+
+            if (coincideNombre || coincideApellidos) {
+                modelotabla.addRow(new Object[]{
+                    e.getNss(),
+                    e.getNom(),
+                    e.getApellidos(),
+                    e.getEmail(),
+                    e.getIban()
+                });
+            }
+        }
         
     }
-
-    @Override
-    protected List<Empleado> listarTodos() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
 }
