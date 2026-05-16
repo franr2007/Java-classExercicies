@@ -63,7 +63,7 @@ public class DataBaseManager {
             statement.executeUpdate("""
                     CREATE TABLE IF NOT EXISTS EMPLEADO(
                         ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                        NSS INTEGER,
+                        NSS INTEGER NOT NULL,
                         NOM TEXT NOT NULL,
                         APELLIDOS TEXT NOT NULL,
                         EMAIL TEXT,

@@ -3,7 +3,7 @@ package es.programacion.cide.model;
 public class Empleado {
     // atributos
     private int id;
-    private int nss;
+    private Long nss;
     private String nom;
     private String apellidos;
     private String email;
@@ -13,7 +13,7 @@ public class Empleado {
     public Empleado() {
     }
 
-    public Empleado(int id, int nss, String nom, String apellidos, String email, String iban) {
+    public Empleado(int id, Long nss, String nom, String apellidos, String email, String iban) {
         this.id = id;
         this.nss = nss;
         this.nom = nom;
@@ -23,15 +23,19 @@ public class Empleado {
     }
 
     // getters y setters
+    public void setId(int id){
+        this.id=id;
+    }
+
     public int getId(){
         return id;
     }
 
-    public int getNss() {
+    public Long getNss() {
         return nss;
     }
 
-    public void setNss(int nss) {
+    public void setNss(Long nss) {
         this.nss = nss;
     }
 

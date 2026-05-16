@@ -15,7 +15,7 @@ public class EmpleadoDao implements Dao<Empleado, Integer> {
         // aqui se prepara la base de datos junto a su conexion y le pasamos el comando
         try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando)) {
             // por cada interrogante dentro de values recojemos los datos del empleado y se pone en values
-            statement.setInt(1, empleado.getNss());
+            statement.setLong(1, empleado.getNss());
             statement.setString(2, empleado.getNom());
             statement.setString(3, empleado.getApellidos());
             statement.setString(4, empleado.getEmail());
@@ -38,7 +38,8 @@ public class EmpleadoDao implements Dao<Empleado, Integer> {
             // este bucle lista a los empleados que contenga el numero de id
             while (resultado.next()) {
                 Empleado empleado = new Empleado();
-                empleado.setNss(resultado.getInt("NSS"));
+                empleado.setId(resultado.getInt("ID")); // CORRECCIÓN: faltaba recojer el ID
+                empleado.setNss(resultado.getLong("NSS"));
                 empleado.setNom(resultado.getString("NOM"));
                 empleado.setApellidos(resultado.getString("APELLIDOS"));
                 empleado.setEmail(resultado.getString("EMAIL"));
@@ -66,7 +67,8 @@ public class EmpleadoDao implements Dao<Empleado, Integer> {
             // bucle que listara al empleado segun la cantidad de resultados del comando
             while (resultado.next()) {
                 Empleado empleado = new Empleado();
-                empleado.setNss(resultado.getInt("NSS"));
+                empleado.setId(resultado.getInt("ID")); // CORRECCIÓN: faltaba recojer el ID
+                empleado.setNss(resultado.getLong("NSS"));
                 empleado.setNom(resultado.getString("NOM"));
                 empleado.setApellidos(resultado.getString("APELLIDOS"));
                 empleado.setEmail(resultado.getString("EMAIL"));
@@ -87,7 +89,7 @@ public class EmpleadoDao implements Dao<Empleado, Integer> {
         // aqui se prepara la base de datos junto a su conexion y le pasamos el comando
         try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando)) {
             // por cada interrogante se sustituira por el valor en orden del empleado
-            statement.setInt(1, empleado.getNss());
+            statement.setLong(1, empleado.getNss());
             statement.setString(2, empleado.getNom());
             statement.setString(3, empleado.getApellidos());
             statement.setString(4, empleado.getEmail());
