@@ -42,14 +42,14 @@ public class DataBaseManager {
             statement.executeUpdate("""
                     CREATE TABLE IF NOT EXISTS TIPUS_PLAZA(
                         ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                        NOM TEXT,
+                        NOM TEXT NOT NULL,
                         FUNCIO TEXT NOT NULL
                     )
                     """);
 
             statement.executeUpdate("""
                     CREATE TABLE IF NOT EXISTS PLAZA(
-                        CODI INTEGER PRIMARY KEY AUTOINCREMENT,
+                        CODI INTEGER PRIMARY KEY,
                         NOM TEXT NOT NULL,
                         SALARI REAL NOT NULL,
                         INFORME_SUPERVISIO TEXT,

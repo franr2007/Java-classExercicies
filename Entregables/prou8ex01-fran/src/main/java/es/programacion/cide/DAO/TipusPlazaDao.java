@@ -20,6 +20,8 @@ public class TipusPlazaDao implements Dao<TipusPlaza, Integer> {
             // pone en values
             statement.setString(1, tipusPlaza.getNom());
             statement.setString(2, tipusPlaza.getFuncion());
+
+            statement.executeUpdate();
         } catch (SQLException e) {
             // en caso de error al preparar la conexion, se imprime el mensaje del error
             System.err.println("Err insert TipusPlaza: " + e.getMessage());
@@ -30,12 +32,13 @@ public class TipusPlazaDao implements Dao<TipusPlaza, Integer> {
     public TipusPlaza recojerPorId(Integer id) {
         // este es el comando que servira para recojer una tipusPlaza por id
         String comando = "SELECT * FROM TIPUS_PLAZA WHERE ID=?";
-        // aqui se prepara la base de datos junto a su conexion y le pasamos el comando,
-        // ademas usamos resulset para ejecutar el comando
-        try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando);
-                ResultSet resultado = statement.executeQuery()) {
+        // aqui se prepara la base de datos junto a su conexion y le pasamos el comando
+        try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando)) {
             // se le pasa el valor del interogante, con el id que se busca
             statement.setInt(1, id);
+
+            //se usa resulset para ejecutar el comando
+            ResultSet resultado = statement.executeQuery();
 
             // este bucle lista las tipusPlazas que contenga el numero de id
             while (resultado.next()) {
@@ -103,13 +106,16 @@ public class TipusPlazaDao implements Dao<TipusPlaza, Integer> {
     @Override
     public void eliminarPorId(Integer id) {
         //comando para eliminar tipusPlazas por id
-        String comando = "DELETE * FROM TIPUS_PLAZA WHERE ID=?";
+        String comando = "DELETE FROM TIPUS_PLAZA WHERE ID=?";
         
         // aqui se prepara la base de datos junto a su conexion y le pasamos el comando,
         // ademas usamos resulset para ejecutar el comando
-        try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando);
-                ResultSet resultado = statement.executeQuery()) {
+        try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando)) {
+            // se le pasa el valor del interogante, con el id que se busca
             statement.setInt(1, id);
+
+            //se usa resulset para ejecutar el comando
+            ResultSet resultado = statement.executeQuery();
             
             // este bucle elimina las tipusPlazas que contenga el numero de id
             while (resultado.next()) {

@@ -4,21 +4,21 @@ public class Plaza {
     //atributos
     private int codi;
     private String nom;
-    private int salari;
+    private Double salari;
     private int codiPlaSuper;
     private String informeSuper;
-    private String nomPlaza;
+    private String tipoPlaza;
     //constructor
     public Plaza(){
     }
 
-    public Plaza(int codi, String nom, int salari, int codiPlaSuper, String informeSuper, String nomPlaza){
+    public Plaza(int codi, String nom, Double salari, int codiPlaSuper, String informeSuper, String tipoPlaza){
         this.codi=codi;
         this.nom=nom;
         this.salari=salari;
         this.codiPlaSuper=codiPlaSuper;
         this.informeSuper=informeSuper;
-        this.nomPlaza=nomPlaza;
+        this.tipoPlaza=tipoPlaza;
     }
     //getters y setters
     public void setCodi(int codi){
@@ -35,10 +35,10 @@ public class Plaza {
         return nom;
     }
 
-    public void setSalari(int salari){
+    public void setSalari(Double salari){
         this.salari=salari;
     }
-    public int getSalari(){
+    public Double getSalari(){
         return salari;
     }
 
@@ -56,11 +56,11 @@ public class Plaza {
         return informeSuper;
     }
 
-    public void setNomPlaza(String nomPlaza){
-        this.nomPlaza=nomPlaza;
+    public void setipoPlaza(String tipoPlaza){
+        this.tipoPlaza=tipoPlaza;
     }
-    public String getNomPlaza(){
-        return nomPlaza;
+    public String getipoPlaza(){
+        return tipoPlaza;
     }
     
     //metodos

@@ -5,13 +5,13 @@ public class Nomina {
     private int id;
     private String iban_pagament;
     private String importe;
-    private int nssEmpleado;
+    private Long nssEmpleado;
     private int codiPlaza;
     //constructor
     public Nomina(){
     }
 
-    public Nomina(int id, String iban_pagament, String importe, int nssEmpleado, int codiPlaza){
+    public Nomina(int id, String iban_pagament, String importe, Long nssEmpleado, int codiPlaza){
         this.id=id;
         this.iban_pagament=iban_pagament;
         this.importe=importe;
@@ -41,10 +41,10 @@ public class Nomina {
         return importe;
     }
 
-    public void setNssEmleado(int nssEmpleado){
+    public void setNssEmleado(Long nssEmpleado){
         this.nssEmpleado=nssEmpleado;
     }
-    public int getNssEmpleado(){
+    public Long getNssEmpleado(){
         return nssEmpleado;
     }
 

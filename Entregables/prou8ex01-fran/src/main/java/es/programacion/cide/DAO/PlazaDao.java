@@ -19,10 +19,10 @@ public class PlazaDao implements Dao<Plaza, Integer> {
             // por cada interrogante dentro de values recojemos los datos de la plaza y se
             // pone en values
             statement.setString(1, plaza.getNom());
-            statement.setInt(2, plaza.getSalari());
+            statement.setDouble(2, plaza.getSalari());
             statement.setString(3, plaza.getInformeSuper());
             statement.setInt(4, plaza.getCodiPlaSuper());
-            statement.setString(5, plaza.getNomPlaza());
+            statement.setString(5, plaza.getipoPlaza());
         } catch (SQLException e) {
             // en caso de error al preparar la conexion, se imprime el mensaje del error
             System.err.println("Err insert plaza: " + e.getMessage());
@@ -44,10 +44,10 @@ public class PlazaDao implements Dao<Plaza, Integer> {
             while (resultado.next()) {
                 Plaza plaza = new Plaza();
                 plaza.setNom(resultado.getString("NOM"));
-                plaza.setSalari(resultado.getInt("SALARI_REAL"));
+                plaza.setSalari(resultado.getDouble("SALARI_REAL"));
                 plaza.setInformeSuper(resultado.getString("INFORME_SUPERVISIO"));
                 plaza.setCodiPlaSuper(resultado.getInt("CODI_PLAZA_SUPERVISORA"));
-                plaza.setNomPlaza(resultado.getString("NOM_TIPUS_PLAZA"));
+                plaza.setipoPlaza(resultado.getString("NOM_TIPUS_PLAZA"));
                 
                 return plaza;
             }
@@ -75,10 +75,10 @@ public class PlazaDao implements Dao<Plaza, Integer> {
             while (resultado.next()) {
                 Plaza plaza = new Plaza();
                 plaza.setNom(resultado.getString("NOM"));
-                plaza.setSalari(resultado.getInt("SALARI_REAL"));
+                plaza.setSalari(resultado.getDouble("SALARI_REAL"));
                 plaza.setInformeSuper(resultado.getString("INFORME_SUPERVISIO"));
                 plaza.setCodiPlaSuper(resultado.getInt("CODI_PLAZA_SUPERVISORA"));
-                plaza.setNomPlaza(resultado.getString("NOM_TIPUS_PLAZA"));
+                plaza.setipoPlaza(resultado.getString("NOM_TIPUS_PLAZA"));
                 listaPla.add(plaza);//se añade a la lista
             }
         } catch (SQLException e) {
@@ -98,10 +98,10 @@ public class PlazaDao implements Dao<Plaza, Integer> {
         try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando)) {
             // por cada interrogante se sustituira por el valor en orden de la plaza
             statement.setString(1, plaza.getNom());
-            statement.setInt(2, plaza.getSalari());
+            statement.setDouble(2, plaza.getSalari());
             statement.setString(3, plaza.getInformeSuper());
             statement.setInt(4, plaza.getCodiPlaSuper());
-            statement.setString(5, plaza.getNomPlaza());
+            statement.setString(5, plaza.getipoPlaza());
             statement.setInt(6, plaza.getCodi());
 
             statement.executeUpdate();
@@ -126,10 +126,10 @@ public class PlazaDao implements Dao<Plaza, Integer> {
             while (resultado.next()) {
                 Plaza plaza = new Plaza();
                 plaza.setNom(resultado.getString("NOM"));
-                plaza.setSalari(resultado.getInt("SALARI_REAL"));
+                plaza.setSalari(resultado.getDouble("SALARI_REAL"));
                 plaza.setInformeSuper(resultado.getString("INFORME_SUPERVISIO"));
                 plaza.setCodiPlaSuper(resultado.getInt("CODI_PLAZA_SUPERVISORA"));
-                plaza.setNomPlaza(resultado.getString("NOM_TIPUS_PLAZA"));
+                plaza.setipoPlaza(resultado.getString("NOM_TIPUS_PLAZA"));
             }
         } catch (SQLException e) {
             // si el try devuelve error, se imprimira el mensaje

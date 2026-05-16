@@ -144,7 +144,7 @@ public class PanelEmpleado extends PanelAbstractoGeneral {
             int formEditarEmp = JOptionPane.showConfirmDialog(this, campos, "Nuevo empleado",
                     JOptionPane.OK_CANCEL_OPTION);
 
-            // si el usuario cancela sale de la funcion añadir
+            // si el usuario cancela sale de la funcion editar
             if (formEditarEmp != JOptionPane.OK_OPTION)
                 return;
 

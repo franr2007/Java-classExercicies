@@ -21,7 +21,7 @@ public class NominaDao implements Dao<Nomina, Integer> {
             // pone en values
             statement.setString(1, nomina.getIbanPag());
             statement.setString(2, nomina.getImporte());
-            statement.setInt(3, nomina.getNssEmpleado());
+            statement.setLong(3, nomina.getNssEmpleado());
             statement.setInt(4, nomina.getCodiPlaza());
         } catch (SQLException e) {
             // en caso de error al preparar la conexion, se imprime el mensaje del error
@@ -45,7 +45,7 @@ public class NominaDao implements Dao<Nomina, Integer> {
                 Nomina nomina = new Nomina();
                 nomina.setIbanPag(resultado.getString("IBAN_PAGAMENT"));
                 nomina.setImporte(resultado.getString("IMPORT_REAL"));
-                nomina.setNssEmleado(resultado.getInt("NSS_EMPLEADO"));
+                nomina.setNssEmleado(resultado.getLong("NSS_EMPLEADO"));
                 nomina.setCodiPlaza(resultado.getInt("CODI_PLAZA"));
                 return nomina;
             }
@@ -74,7 +74,7 @@ public class NominaDao implements Dao<Nomina, Integer> {
                 Nomina nomina = new Nomina();
                 nomina.setIbanPag(resultado.getString("IBAN_PAGAMENT"));
                 nomina.setImporte(resultado.getString("IMPORT_REAL"));
-                nomina.setNssEmleado(resultado.getInt("NSS_EMPLEADO"));
+                nomina.setNssEmleado(resultado.getLong("NSS_EMPLEADO"));
                 nomina.setCodiPlaza(resultado.getInt("CODI_PLAZA"));
                 listaNom.add(nomina);//se añade a la lista
             }
@@ -96,7 +96,7 @@ public class NominaDao implements Dao<Nomina, Integer> {
             // por cada interrogante se sustituira por el valor en orden de la nomina
             statement.setString(1, nomina.getIbanPag());
             statement.setString(2, nomina.getImporte());
-            statement.setInt(3, nomina.getNssEmpleado());
+            statement.setLong(3, nomina.getNssEmpleado());
             statement.setInt(4, nomina.getCodiPlaza());
             statement.setInt(5, nomina.getId());
 
@@ -123,7 +123,7 @@ public class NominaDao implements Dao<Nomina, Integer> {
                 Nomina nomina = new Nomina();
                 nomina.setIbanPag(resultado.getString("IBAN_PAGAMENT"));
                 nomina.setImporte(resultado.getString("IMPORT_REAL"));
-                nomina.setNssEmleado(resultado.getInt("NSS_EMPLEADO"));
+                nomina.setNssEmleado(resultado.getLong("NSS_EMPLEADO"));
                 nomina.setCodiPlaza(resultado.getInt("CODI_PLAZA"));
             }
         } catch (SQLException e) {
