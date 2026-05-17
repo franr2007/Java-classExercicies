@@ -13,7 +13,7 @@ public class PanelTipoPla extends PanelAbstractoGeneral {
     // constructor
     public PanelTipoPla() {
         // parametros de la tabla
-        super(new String[] { "ID", "Nombre", "Funcion" });
+        super(new String[] { "ID", "Nombre", "Funcion" }, "Busca por el nombre del tipo de plaza");
 
         tipoPlaDao = new TipusPlazaDao();
 
@@ -84,7 +84,7 @@ public class PanelTipoPla extends PanelAbstractoGeneral {
         }
     }
 
-    // metodo para eliminar las plazas
+    // metodo para eliminar los tipos de plaza
     @Override
     protected void eliminar(Integer id) {
         if (id == null)
@@ -166,11 +166,11 @@ public class PanelTipoPla extends PanelAbstractoGeneral {
         // Por cada tipo de plaza dentro de la base de datos
         for (TipusPlaza tipoPla : tipoPlaDao.listarTodos()) {
             // cojera el nombre del tipo de plaza
-            String nombreTipoPla = tipoPla.getNom();
+            String nombreTipoPla = tipoPla.getNom().trim().toLowerCase();
 
             // y compara el nombre del tipo de plaza completo
             // con lo que se ha escrito en la busqueda
-            if (nombreTipoPla.contains(elementoABuscar)) {
+            if (nombreTipoPla.contains(elementoABuscar.trim().toLowerCase())) {
                 // por cada coindicencia, se añade una fila con el tipo de plaza
                 modelotabla.addRow(new Object[] {
                         tipoPla.getId(), tipoPla.getNom(), tipoPla.getFuncion()
@@ -207,7 +207,7 @@ public class PanelTipoPla extends PanelAbstractoGeneral {
                 continue; // hace que no se compruebe tipoPla con si mismo
 
             // si un tipo de plaza es el mismo el del textfield
-            if (tipoPla.getNom() == fieldNom.getText().trim()) {
+            if (tipoPla.getNom().trim().equalsIgnoreCase(fieldNom.getText().trim())) {
                 // devuelve un mensaje de error
                 JOptionPane.showMessageDialog(this, "Ya existe un tipo de plaza con ese Nombre");
                 return false; // y de vuelve falso

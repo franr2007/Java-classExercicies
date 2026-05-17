@@ -1,5 +1,6 @@
 package es.programacion.cide.model;
 
+//modelo logico de nomina
 public class Nomina {
     //atributos
     private int id;

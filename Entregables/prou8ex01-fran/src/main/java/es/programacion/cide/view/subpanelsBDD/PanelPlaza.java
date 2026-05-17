@@ -18,7 +18,7 @@ public class PanelPlaza extends PanelAbstractoGeneral {
     public PanelPlaza() {
         // parametros de la tabla
         super(new String[] { "Codi", "Nombre Plaza", "Salario", "Codi Plaza Superior", "Informe Plaza Superior",
-                "Nombre del tipo de plaza" });
+                "Nombre del tipo de plaza" }, "Buscar por el nombre de la plaza");
 
         plaDao = new PlazaDao();
         tipusPlaDao = new TipusPlazaDao();
@@ -49,7 +49,6 @@ public class PanelPlaza extends PanelAbstractoGeneral {
     @Override
     protected void anadir() {
         Boolean valido = false;
-        JTextField fieldCodi = new JTextField();
         JTextField fieldNom = new JTextField();
         JTextField fieldSalari = new JTextField();
         // se usa comboBox porque son datos que deben estar desde antes
@@ -71,7 +70,7 @@ public class PanelPlaza extends PanelAbstractoGeneral {
         // esto es un array de objetos que tiene dentro los diferentes
         // campos que se van a rellenar
         Object[] campos = {
-                "Codi:", fieldCodi, "Nombre Plaza:", fieldNom, "Salario:", fieldSalari,
+                "Nombre Plaza:", fieldNom, "Salario:", fieldSalari,
                 "Codi plaza Superior:", comboPlaSuper, "Informe:", fieldInforme, "Tipo de plaza", comboTipoPla
         };
 
@@ -88,7 +87,7 @@ public class PanelPlaza extends PanelAbstractoGeneral {
                 return;
 
             // si los valores son validos
-            if (validarCampos(fieldCodi, fieldNom, fieldSalari, comboPlaSuper, comboTipoPla, null)) {
+            if (validarCampos(fieldNom, fieldSalari, comboPlaSuper, comboTipoPla, null)) {
                 Plaza pla = new Plaza(); // se crea un nueva Plaza
                 Plaza plaSuper = (Plaza) comboPlaSuper.getSelectedItem();
                 TipusPlaza tipoPla = (TipusPlaza) comboTipoPla.getSelectedItem();
@@ -104,7 +103,6 @@ public class PanelPlaza extends PanelAbstractoGeneral {
 
                 // se le pone los datos de los textfield
                 // .trim() elimina los espacio que haya entre los textos
-                pla.setCodi(Integer.parseInt(fieldCodi.getText().trim()));
                 pla.setNom(fieldNom.getText().trim());
                 pla.setSalari(Double.parseDouble(fieldSalari.getText().trim()));
                 pla.setCodiPlaSuper(codiSuper);
@@ -193,7 +191,7 @@ public class PanelPlaza extends PanelAbstractoGeneral {
                 return;
 
             // si los valores son validos
-            if (validarCampos(null, fieldNom, fieldSalari, comboPlaSuper, comboTipoPla, codi)) {
+            if (validarCampos(fieldNom, fieldSalari, comboPlaSuper, comboTipoPla, codi)) {
 
                 Plaza plaSuper = (Plaza) comboPlaSuper.getSelectedItem();
                 TipusPlaza tipoPla = (TipusPlaza) comboTipoPla.getSelectedItem();
@@ -233,11 +231,11 @@ public class PanelPlaza extends PanelAbstractoGeneral {
         // Por cada Plaza dentro de la base de datos
         for (Plaza pla : plaDao.listarTodos()) {
             // cojera el nombre de la plaza
-            String nombrePla = pla.getNom();
+            String nombrePla = pla.getNom().trim().toLowerCase();
 
             // y compara el nombre de la plaza completo 
             // con lo que se ha escrito en la busqueda
-            if (nombrePla.contains(elementoABuscar)) {
+            if (nombrePla.contains(elementoABuscar.trim().toLowerCase())) {
                 // por cada coindicencia, se añade una fila con la Plaza
                 modelotabla.addRow(new Object[] {
                         pla.getCodi(), pla.getNom(), pla.getSalari()+"€",
@@ -250,7 +248,7 @@ public class PanelPlaza extends PanelAbstractoGeneral {
 
     // metodo privado que valida las condicionees que tiene que tener cada campo
     // dentro de su valor
-    private boolean validarCampos(JTextField fieldCodi, JTextField fieldNom,
+    private boolean validarCampos(JTextField fieldNom,
             JTextField fieldSalari, JComboBox<Plaza> comboPlaSuper, JComboBox<TipusPlaza> comboTipoPla, Integer codi) {
         
         //se recoje el item seleccinado de cada combobox
@@ -260,10 +258,6 @@ public class PanelPlaza extends PanelAbstractoGeneral {
         // validar vacios
 
         // si los campos estan vacios se pedira que se rellene
-        if (codi == null && fieldCodi.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "El codigo es obligatorio");
-            return false;
-        }
         if (fieldNom.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "El Nombre de la plaza es obligatorio");
             return false;
@@ -278,14 +272,6 @@ public class PanelPlaza extends PanelAbstractoGeneral {
         }
 
         // validar numeros
-        if (fieldCodi != null) {
-            try {
-                Integer.parseInt(fieldCodi.getText().trim());
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "El codigo debe ser un numero");
-                return false;
-            }
-        }
 
         try {
             Double.parseDouble(fieldSalari.getText().trim());
@@ -309,12 +295,12 @@ public class PanelPlaza extends PanelAbstractoGeneral {
 
             // si tiene un codi ya asignada es que esta editando
             if (codi != null && pla.getCodi() == codi)
-                continue; // hace que no se compruebe pla con si mismo
+                continue; // hace que no se compruebe plaza con si mismo
 
-            // si una Plaza tiene el mismo nss que el de el textfield ya tiene codigo
-            if (fieldCodi != null && pla.getCodi() == Integer.parseInt(fieldCodi.getText().trim())) {
-                // devuelve un mensaje de error
-                JOptionPane.showMessageDialog(this, "Ya existe una Plaza con ese codigo");
+            // si una Plaza tiene el mismo nombre que el de el textfield
+            if (pla.getNom().trim().equalsIgnoreCase(fieldNom.getText().trim())) {
+                // devuelve un mensaje de error, porque ya existe esa plaza
+                JOptionPane.showMessageDialog(this, "Ya existe una Plaza con ese nombre");
                 return false; // y de vuelve falso
             }
         }

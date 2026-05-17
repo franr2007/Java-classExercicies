@@ -24,7 +24,7 @@ public class VentanaPrincipal extends JFrame{
 
         contenedorPaneles = new JPanel(new CardLayout()); // Contenedor de paneles tipo layout
 
-        panelInicio = new PanelInicio(this); // Menu principal y le añado esta ventana, para luego pasarle el metodo
+        panelInicio = new PanelInicio(this); // Menu Login y le añado esta ventana, para luego pasarle el metodo
         contenedorPaneles.add(panelInicio);// se proyecta el panel anterior
 
         add(contenedorPaneles, BorderLayout.CENTER);// Se añade el contenedor de paneles a la ventana y lo proyecta

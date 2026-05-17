@@ -11,12 +11,13 @@ import es.programacion.cide.model.Plaza;
 
 public class PlazaDao implements Dao<Plaza, Integer> {
 
+    //metodo para insertar una plaza
     @Override
     public void insertar(Plaza plaza) {
         // este es el comando en sqlite para insertar valores a la base de datos
         String comando = "INSERT INTO PLAZA (NOM,SALARI,INFORME_SUPERVISIO,CODI_PLAZA_SUPERVISORA, NOM_TIPUS_PLAZA) VALUES(?,?,?,?,?)";
         // aqui se prepara la base de datos junto a su conexion y le pasamos el comando
-        try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando)) {
+        try (PreparedStatement statement = DataBaseManager.getConex().prepareStatement(comando)) {
             // por cada interrogante dentro de values recojemos los datos de la plaza y se
             // pone en values
             statement.setString(1, plaza.getNom());
@@ -31,25 +32,25 @@ public class PlazaDao implements Dao<Plaza, Integer> {
             }
             statement.setString(5, plaza.getipoPlaza());
             // ejecuta el comando
-            statement.executeUpdate();
+            statement.executeUpdate();//update para modificar
         } catch (SQLException e) {
             // en caso de error al preparar la conexion, se imprime el mensaje del error
             System.err.println("Err insert plaza: " + e.getMessage());
         }
     }
 
+    //metodo para recojer una plaza por codi
     @Override
     public Plaza recojerPorId(Integer codi) {
         // este es el comando que servira para recojer una plaza por codi
         String comando = "SELECT * FROM PLAZA WHERE CODI=?";
-        // aqui se prepara la base de datos junto a su conexion y le pasamos el comando,
-        // ademas usamos resulset para ejecutar el comando
-        try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando)) {
+        // aqui se prepara la base de datos junto a su conexion y le pasamos el comando
+        try (PreparedStatement statement = DataBaseManager.getConex().prepareStatement(comando)) {
             // se le pasa el valor del interogante, con el codi que se busca
             statement.setInt(1, codi);
 
-            //ejecuta el comando
-            ResultSet resultado = statement.executeQuery();
+            //resultset ejecuta el comando
+            ResultSet resultado = statement.executeQuery();//query para hacer selects
 
             // este bucle lista las plazas que contenga el numero de codi
             while (resultado.next()) {
@@ -71,6 +72,7 @@ public class PlazaDao implements Dao<Plaza, Integer> {
         return null;
     }
 
+    //metodo para listar todas las plazas
     @Override
     public List<Plaza> listarTodos() {
         // comando que se usara para listar todas las plazas
@@ -80,10 +82,10 @@ public class PlazaDao implements Dao<Plaza, Integer> {
 
         // aqui se prepara la base de datos junto a su conexion y le pasamos el comando,
         // ademas usamos resulset para ejecutar el comando
-        try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando);
+        try (PreparedStatement statement = DataBaseManager.getConex().prepareStatement(comando);
                 ResultSet resultado = statement.executeQuery()) {
 
-            // bucle que listara la plaza segun cuantos resultados de el comando
+            // bucle que listara las plazas segun cuantos resultados de el comando
             while (resultado.next()) {
                 Plaza plaza = new Plaza();
                 plaza.setCodi(resultado.getInt("CODI"));
@@ -102,13 +104,14 @@ public class PlazaDao implements Dao<Plaza, Integer> {
         return listaPla;
     }
 
+    //metodo para editar una plaza
     @Override
     public void editar(Plaza plaza) {
         // este es el comando que se utilizara para hacer update a la plaza
         String comando = "UPDATE PLAZA SET NOM=?, SALARI=?, INFORME_SUPERVISIO=?, CODI_PLAZA_SUPERVISORA=?, NOM_TIPUS_PLAZA=? WHERE CODI=?";
 
         // aqui se prepara la base de datos junto a su conexion y le pasamos el comando
-        try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando)) {
+        try (PreparedStatement statement = DataBaseManager.getConex().prepareStatement(comando)) {
             // por cada interrogante se sustituira por el valor en orden de la plaza
             statement.setString(1, plaza.getNom());
             statement.setDouble(2, plaza.getSalari());
@@ -123,24 +126,26 @@ public class PlazaDao implements Dao<Plaza, Integer> {
             statement.setString(5, plaza.getipoPlaza());
             statement.setInt(6, plaza.getCodi());
 
-            statement.executeUpdate();
+            //ejecutara el comando
+            statement.executeUpdate();//update para modificar
         } catch (SQLException e) {
             // si el try devuelve error, se imprimira el mensaje
             System.err.println("Err editar plaza: " + e.getMessage());
         }
     }
 
+    //metodo para eliminar una plaza por codi
     @Override
     public void eliminarPorId(Integer codi) {
         // comando para eliminar plazas por codi
         String comando = "DELETE FROM PLAZA WHERE CODI=?";
 
-        // aqui se prepara la base de datos junto a su conexion y le pasamos el comando,
-        // ademas usamos resulset para ejecutar el comando
-        try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando)) {
+        // aqui se prepara la base de datos junto a su conexion y le pasamos el comando
+        try (PreparedStatement statement = DataBaseManager.getConex().prepareStatement(comando)) {
+            //statemtent.setint pondra el codi en el primer ? justo al lado de CODI=?
             statement.setInt(1, codi);
             // ejecuta el comando
-            statement.executeUpdate();
+            statement.executeUpdate();//update para modificar
         } catch (SQLException e) {
             // si el try devuelve error, se imprimira el mensaje
             System.err.println("Err Recojer plaza: " + e.getMessage());

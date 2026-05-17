@@ -1,5 +1,6 @@
 package es.programacion.cide.model;
 
+//modelo logico de empleado
 public class Empleado {
     // atributos
     private int id;
@@ -23,11 +24,11 @@ public class Empleado {
     }
 
     // getters y setters
-    public void setId(int id){
-        this.id=id;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 
@@ -72,8 +73,10 @@ public class Empleado {
     }
     // metodos
 
+    // cambia visualmente el contenido que devulvera dentro de los Jcombobox al
+    // verse en los paneles
     @Override
     public String toString() {
-        return String.valueOf(nss)+" "+nom+"-"+apellidos;
+        return String.valueOf(nss) + " " + nom + "-" + apellidos;
     }
 }

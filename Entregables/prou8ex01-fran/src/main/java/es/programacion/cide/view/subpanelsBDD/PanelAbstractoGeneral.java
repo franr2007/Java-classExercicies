@@ -13,7 +13,7 @@ public abstract class PanelAbstractoGeneral extends JPanel {
     // constructor
     // se le pasa un array con en nombre de cada columna, que luego aplicaran las
     // clases hijas
-    public PanelAbstractoGeneral(String[] columns) {
+    public PanelAbstractoGeneral(String[] columns, String textoBuscador) {
         setLayout(new BorderLayout(0, 8));
 
         // modelo de la tabla
@@ -29,7 +29,7 @@ public abstract class PanelAbstractoGeneral extends JPanel {
         tabla.setRowHeight(28); // altura de la tabla
         tabla.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        add(panelBuscador(), BorderLayout.NORTH);
+        add(panelBuscador(textoBuscador), BorderLayout.NORTH);
         add(new JScrollPane(tabla), BorderLayout.CENTER);
     }
 
@@ -38,10 +38,10 @@ public abstract class PanelAbstractoGeneral extends JPanel {
     // metodos
 
     // metodo para crear el panel superior
-    private JPanel panelBuscador() {
+    private JPanel panelBuscador(String textoBuscador) {
         JPanel panel = new JPanel(new BorderLayout(5, 0));
 
-        buscador = new JTextField();
+        buscador = new JTextField(textoBuscador);
         buscador.addActionListener(e -> buscar(buscador.getText().trim().toLowerCase()));
 
         JButton btnBuscar = new JButton("Buscar");

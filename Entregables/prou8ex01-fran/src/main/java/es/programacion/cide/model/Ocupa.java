@@ -1,5 +1,6 @@
 package es.programacion.cide.model;
 
+//modelo logico de ocupa
 public class Ocupa {
     //atributos
     private int id;

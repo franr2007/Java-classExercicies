@@ -62,12 +62,12 @@ public class PanelInicio extends JPanel {
         // tamaño del label
         labelSize = new Dimension(150, 25);
 
-        // entrada para que el jugador1 ponga su nombre
+        // entrada para que el usuario ponga su email
         textoEmail = new JLabel("Email: ");
         textoEmail.setPreferredSize(labelSize);
         fieldEmail = new JTextField(40);
 
-        // entrada para que ponga la contraseña el usuario
+        // entrada para que el usuario ponga la contraseña
         textoPassword = new JLabel("Contraseña: ");
         textoPassword.setPreferredSize(labelSize);
         fieldPassword = new JTextField(40);
@@ -78,9 +78,9 @@ public class PanelInicio extends JPanel {
         btnLogIn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) { // cuando aprieta el boton
-                PanelBDD panelJuego = new PanelBDD(); // se crea el panel juego
-                ventanaPrincipal.cambiarPanel(panelJuego);// y utilizo el metodo para cambiar de panel
-                panelJuego.requestFocus(); // pide focus para el paneljuego ya que lo necesita para su interaccion
+                PanelBDD panelBdd = new PanelBDD(); // se crea el panelBDD
+                ventanaPrincipal.cambiarPanel(panelBdd);// y utilizo el metodo para cambiar de panel
+                panelBdd.requestFocus(); // pide focus para el panelBdd ya que lo necesita para su interaccion
             }
         });
 

@@ -1,5 +1,6 @@
 package es.programacion.cide.model;
 
+//modelo logico de plaza
 public class Plaza {
     //atributos
     private int codi;
@@ -64,6 +65,8 @@ public class Plaza {
     }
     
     //metodos
+    // cambia visualmente el contenido que devulvera dentro de los Jcombobox al
+    // verse en los paneles
     @Override
     public String toString() {
         return String.valueOf(codi)+" "+nom +"-"+tipoPlaza;

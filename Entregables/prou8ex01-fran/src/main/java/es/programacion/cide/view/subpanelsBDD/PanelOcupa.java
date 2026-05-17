@@ -25,20 +25,20 @@ public class PanelOcupa extends PanelAbstractoGeneral {
     // constructor
     public PanelOcupa() {
         // parametros de la tabla
-        super(new String[] { "ID", "Nss Empleado", "Codigo Plaza", "Fecha Inicio", "Fecha Final" });
+        super(new String[] { "ID", "Nss Empleado", "Codigo Plaza", "Fecha Inicio", "Fecha Final" },"Busca por nss de un empleado");
 
         ocupaDao = new OcupaDao();
         empDao = new EmpleadoDao();
         plaDao = new PlazaDao();
 
-        // se cargan los datos para poder ver los tipo de plazas que hay
+        // se cargan los datos para poder ver las ocupaciones que hay
         cargarDatos();
     }
     // getters y setters
 
     // metodos
 
-    // metodo para listar los tipos de plaza dentro de la base de datos
+    // metodo para listar las ocupaciones dentro de la base de datos
     @Override
     protected void cargarDatos() {
         // setrowcount(0) vacia todas las filas de la tabla
@@ -54,7 +54,7 @@ public class PanelOcupa extends PanelAbstractoGeneral {
         }
     }
 
-    // metodo para añadir un tipo de plaza
+    // metodo para añadir una ocupacion
     @Override
     protected void anadir() {
         Boolean valido = false;
@@ -64,7 +64,7 @@ public class PanelOcupa extends PanelAbstractoGeneral {
         JTextField fieldFechaIncio = new JTextField();
         JTextField fieldFechaFinal = new JTextField();
 
-        // mete dentro plazas que ya existen
+        // mete dentro Empleados que ya existen
         comboNssEmp.addItem(null);
         for (Empleado emp : empDao.listarTodos()) {
             comboNssEmp.addItem(emp);
@@ -97,7 +97,7 @@ public class PanelOcupa extends PanelAbstractoGeneral {
 
             // si los valores son validos
             if (validarCampos(comboNssEmp, comboCodiPla, fieldFechaIncio, fieldFechaFinal, null)) {
-                Ocupa ocupa = new Ocupa(); // se crea un nuevo tipo de plaza
+                Ocupa ocupa = new Ocupa(); // se crea un nueva pcupacion
                 Empleado emp = (Empleado) comboNssEmp.getSelectedItem();
                 Plaza pla = (Plaza) comboCodiPla.getSelectedItem();
                 Long nssEmp;
@@ -125,7 +125,7 @@ public class PanelOcupa extends PanelAbstractoGeneral {
                 ocupa.setDataInici(fieldFechaIncio.getText().trim());
                 ocupa.setDataFi(fieldFechaFinal.getText().trim());
 
-                // se llama a la funcion insertar de tipoPlaDao
+                // se llama a la funcion insertar de ocupaDao
                 // para insertar la info en la base de datos
                 ocupaDao.insertar(ocupa);
 
@@ -136,12 +136,12 @@ public class PanelOcupa extends PanelAbstractoGeneral {
         }
     }
 
-    // metodo para eliminar las plazas
+    // metodo para eliminar una ocupacion
     @Override
     protected void eliminar(Integer id) {
         if (id == null)
             return; // si no hay id no hace nada
-        // JOptionPane que pregunta si quieres eliminar el tipo de plaza
+        // JOptionPane que pregunta si quieres eliminar una ocupacion
         // dandote a elejir entre si o no
         int eleccion = JOptionPane.showConfirmDialog(this,
                 "Quieres eliminar esta ocupacion",
@@ -160,14 +160,14 @@ public class PanelOcupa extends PanelAbstractoGeneral {
 
     }
 
-    // metodo para editar los datos de un tipo de plaza
+    // metodo para editar los datos de una ocupacion
     @Override
     protected void editar(Integer id) {
         if (id == null)
             return; // si no hay id no hace nada
         Ocupa ocupa = ocupaDao.recojerPorId(id);
         if (ocupa == null)
-            return; // si no hay un tipo de plaza con ese id no hace nada
+            return; // si no hay una ocupacion con ese id no hace nada
 
         Boolean valido = false;
         JComboBox<Empleado> comboNssEmp = new JComboBox<>();
@@ -175,7 +175,7 @@ public class PanelOcupa extends PanelAbstractoGeneral {
         JTextField fieldFechaIncio = new JTextField(ocupa.getDataInici());
         JTextField fieldFechaFinal = new JTextField(ocupa.getDataFi());
 
-        // mete dentro plazas que ya existen
+        // mete dentro Empleados que ya existen
         comboNssEmp.addItem(null);
         for (Empleado emp : empDao.listarTodos()) {
             comboNssEmp.addItem(emp);
@@ -207,7 +207,7 @@ public class PanelOcupa extends PanelAbstractoGeneral {
                 return;
 
             // si los valores son validos
-            if (validarCampos(comboNssEmp, comboCodiPla, fieldFechaIncio, fieldFechaFinal, null)) {
+            if (validarCampos(comboNssEmp, comboCodiPla, fieldFechaIncio, fieldFechaFinal, id)) {
                 Empleado emp = (Empleado) comboNssEmp.getSelectedItem();
                 Plaza pla = (Plaza) comboCodiPla.getSelectedItem();
                 Long nssEmp;
@@ -234,7 +234,7 @@ public class PanelOcupa extends PanelAbstractoGeneral {
                 ocupa.setDataInici(fieldFechaIncio.getText().trim());
                 ocupa.setDataFi(fieldFechaFinal.getText().trim());
 
-                // llama a la funcion editar de tipoPlaDao
+                // llama a la funcion editar de ocupaDao
                 // que es la funcion que ejcutara el comando sql
                 ocupaDao.editar(ocupa);
                 cargarDatos();
@@ -243,19 +243,19 @@ public class PanelOcupa extends PanelAbstractoGeneral {
         }
     }
 
-    // metodo para buscar por nombre del tipo de plaza
-    // entre los tipos de plaza
+    // metodo para buscar por el nss del empleado
+    // entre las ocupaciones
     @Override
     protected void buscar(String elementoABuscar) {
         // setrowcount vacia las filas de la tabla
         modelotabla.setRowCount(0);
 
-        // Por cada tipo de plaza dentro de la base de datos
+        // Por cada tipo de ocupacion dentro de la base de datos
         for (Ocupa ocupa : ocupaDao.listarTodos()) {
-            // cojera el nombre del tipo de plaza
+            // cojera el nss del empleado
             String nssEmp = String.valueOf(ocupa.getNssEmp());
 
-            // y compara el nombre del tipo de plaza completo
+            // y compara el nss del empleado
             // con lo que se ha escrito en la busqueda
             if (nssEmp.contains(elementoABuscar)) {
                 // por cada coindicencia, se añade una fila con el tipo de plaza
@@ -274,17 +274,17 @@ public class PanelOcupa extends PanelAbstractoGeneral {
             JTextField fieldFehcaIncio,
             JTextField fieldFechaFin, Integer id) {
 
-        Empleado nssEmp = (Empleado) comboNssEmp.getSelectedItem();
-        Plaza codiPla = (Plaza) comboCodiPla.getSelectedItem();
+        Empleado emp = (Empleado) comboNssEmp.getSelectedItem();
+        Plaza pla = (Plaza) comboCodiPla.getSelectedItem();
 
         // validar vacios
 
         // si los campos estan vacios se pedira que se rellene
-        if (nssEmp == null) {
+        if (emp == null) {
             JOptionPane.showMessageDialog(this, "El nss del empleado es obligatorio");
             return false;
         }
-        if (codiPla == null) {
+        if (pla == null) {
             JOptionPane.showMessageDialog(this, "El codigo de la plaza es obligatorio");
             return false;
         }
@@ -314,15 +314,15 @@ public class PanelOcupa extends PanelAbstractoGeneral {
 
         // validar duplicados
 
-        // por cada tipo de plaza dentro de la base de datos
+        // por cada ocupacion dentro de la base de datos
         for (Ocupa ocupa : ocupaDao.listarTodos()) {
 
             // si tiene un id ya asignado es que esta editando
             if (id != null && ocupa.getId() == id)
-                continue; // hace que no se compruebe tipoPla con si mismo
+                continue; // hace que no se compruebe la ocupacion con si mismo
 
-            // si un tipo de plaza es el mismo el del textfield
-            if (id != null & ocupa.getNssEmp() == nssEmp.getNss()) {
+            // si el nss de un empleado es el mismo el del Jcombobox
+            if (ocupa.getNssEmp().equals(emp.getNss())) {
                 // devuelve un mensaje de error
                 JOptionPane.showMessageDialog(this, "Ya existe una ocupacion con este Nss");
                 return false; // y de vuelve falso

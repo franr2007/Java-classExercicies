@@ -8,12 +8,13 @@ import es.programacion.cide.model.Empleado;
 
 public class EmpleadoDao implements Dao<Empleado, Integer> {
 
+    //metodo para insertar un empleado
     @Override
     public void insertar(Empleado empleado) {
         // este es el comando en sqlite para insertar valores a la base de datos
         String comando = "INSERT INTO Empleado (NSS,NOM,APELLIDOS,EMAIL,IBAN) VALUES(?,?,?,?,?)";
         // aqui se prepara la base de datos junto a su conexion y le pasamos el comando
-        try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando)) {
+        try (PreparedStatement statement = DataBaseManager.getConex().prepareStatement(comando)) {
             // por cada interrogante dentro de values recojemos los datos del empleado y se pone en values
             statement.setLong(1, empleado.getNss());
             statement.setString(2, empleado.getNom());
@@ -21,21 +22,24 @@ public class EmpleadoDao implements Dao<Empleado, Integer> {
             statement.setString(4, empleado.getEmail());
             statement.setString(5, empleado.getIban());
             //ejecuta el comando
-            statement.executeUpdate();
+            statement.executeUpdate();//update para modificar
         } catch (SQLException e) {
             // en caso de error al preparar la conexion, se imprime el mensaje del error
             System.err.println("Err insert empleado: " + e.getMessage());
         }
     }
 
+    //metodo para recojer un empleado por id
     @Override
     public Empleado recojerPorId(Integer id) {
         // este es el comando que servira para recojer a un empleado por id
         String comando = "SELECT * FROM EMPLEADO WHERE ID=?";
         // aqui se prepara la base de datos junto a su conexion y le pasamos el comando
-        try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando)) {
-            statement.setInt(1, id); // CORRECCIÓN: el parametro debe ponerse antes de ejecutar la query
-            ResultSet resultado = statement.executeQuery(); // CORRECCIÓN: executeQuery va despues de setear los parametros
+        try (PreparedStatement statement = DataBaseManager.getConex().prepareStatement(comando)) {
+            //statement.setInt pone el id en el primer ? justo al lado de ID=?
+            statement.setInt(1, id);
+            //ejecuta el comando
+            ResultSet resultado = statement.executeQuery();//query para selects
             // este bucle lista a los empleados que contenga el numero de id
             while (resultado.next()) {
                 Empleado empleado = new Empleado();
@@ -55,6 +59,7 @@ public class EmpleadoDao implements Dao<Empleado, Integer> {
         return null;
     }
 
+    //metodo para listar a todos los empeados
     @Override
     public List<Empleado> listarTodos() {
         // comando que se usara para listar todos los empleados
@@ -63,7 +68,7 @@ public class EmpleadoDao implements Dao<Empleado, Integer> {
         List<Empleado> listaEmp = new ArrayList<>();
         // aqui se prepara la base de datos junto a su conexion y le pasamos el comando,
         // ademas usamos resulset para ejecutar el comando
-        try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando);
+        try (PreparedStatement statement = DataBaseManager.getConex().prepareStatement(comando);
                 ResultSet resultado = statement.executeQuery()) {
             // bucle que listara al empleado segun la cantidad de resultados del comando
             while (resultado.next()) {
@@ -83,12 +88,13 @@ public class EmpleadoDao implements Dao<Empleado, Integer> {
         return listaEmp;
     }
 
+    //metodo para editar a un empleado
     @Override
     public void editar(Empleado empleado) {
         // este es el comando que se utilizara para hacer update al empleado
-        String comando = "UPDATE EMPLEADO SET NSS=?, NOM=?, APELLIDOS=?, EMAIL=?, IBAN=? WHERE ID=?"; // CORRECCIÓN: APELLIDO estaba mal escrito, es APELLIDOS
+        String comando = "UPDATE EMPLEADO SET NSS=?, NOM=?, APELLIDOS=?, EMAIL=?, IBAN=? WHERE ID=?";
         // aqui se prepara la base de datos junto a su conexion y le pasamos el comando
-        try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando)) {
+        try (PreparedStatement statement = DataBaseManager.getConex().prepareStatement(comando)) {
             // por cada interrogante se sustituira por el valor en orden del empleado
             statement.setLong(1, empleado.getNss());
             statement.setString(2, empleado.getNom());
@@ -96,19 +102,21 @@ public class EmpleadoDao implements Dao<Empleado, Integer> {
             statement.setString(4, empleado.getEmail());
             statement.setString(5, empleado.getIban());
             statement.setInt(6, empleado.getId());
-            statement.executeUpdate();
+            statement.executeUpdate();//update para modificar
         } catch (SQLException e) {
             // si el try devuelve error, se imprimira el mensaje
             System.err.println("Err editar empleado: " + e.getMessage());
         }
     }
 
+    //metodo para eliminar a un empleado por id
     @Override
     public void eliminarPorId(Integer id) {
         // comando para eliminar empleados por id
         String comando = "DELETE FROM EMPLEADO WHERE ID=?";
         // aqui se prepara la base de datos junto a su conexion y le pasamos el comando
-        try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando)) {
+        try (PreparedStatement statement = DataBaseManager.getConex().prepareStatement(comando)) {
+            //statement.setInt pondra el id en el primer ? justo al lado de ID=?
             statement.setInt(1, id);
             //ejecuta el comando
             statement.executeUpdate();

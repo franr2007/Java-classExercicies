@@ -12,33 +12,38 @@ public class DataBaseManager {
     // constructor
     public DataBaseManager() {
         try {
+            //intenta establecer conexion con la base de datos
             conexion = DriverManager.getConnection("jdbc:sqlite:miDataBase.db");
         } catch (SQLException e) {
-            System.err.println("==ERROR BASE DE DATOS");
+            //si da error
+            //se recoje los errores principales
+            System.err.println("==ERROR BASE DE DATOS==");
             System.err.println("Mensaje: " + e.getMessage());
             System.err.println("Estado SQL: " + e.getSQLState());
-
-            SQLException proximoErr = e.getNextException();
-
-            while (proximoErr != null) {
-                System.err.println("Error extra: " + proximoErr.getMessage());
-                proximoErr = e.getNextException();
-            }
         }
     }
 
     // getters y setters
 
     // metodos
-    public static Connection getConnection() throws SQLException {
+
+    //metodo que devuelve la conexion de la base de datos
+    public static Connection getConex() throws SQLException {
+        //si no existe o esta cerrada
         if (conexion == null || conexion.isClosed()) {
+            //la vuelve a crear
             conexion = DriverManager.getConnection("jdbc:sqlite:miDataBase.db");
         }
         return conexion;
     }
 
+    //metodo para crear las tablas de la base de datos
     public void crearTablas() {
-        try (Statement statement = getConnection().createStatement()) {
+        //intenta cojer la conexion de la base de datos
+        try (Statement statement = getConex().createStatement()) {
+            //si funciona se crean las tablas
+
+            //tabla tipusPlaza
             statement.executeUpdate("""
                     CREATE TABLE IF NOT EXISTS TIPUS_PLAZA(
                         ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -47,6 +52,7 @@ public class DataBaseManager {
                     )
                     """);
 
+            //tabla Plaza
             statement.executeUpdate("""
                     CREATE TABLE IF NOT EXISTS PLAZA(
                         CODI INTEGER PRIMARY KEY,
@@ -59,7 +65,8 @@ public class DataBaseManager {
                         FOREIGN KEY (NOM_TIPUS_PLAZA) REFERENCES TIPUS_PLAZA(NOM)
                     )
                     """);
-
+            
+            //tabla empleado        
             statement.executeUpdate("""
                     CREATE TABLE IF NOT EXISTS EMPLEADO(
                         ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -71,6 +78,7 @@ public class DataBaseManager {
                     )
                     """);
 
+            //tabla ocupa
             statement.executeUpdate("""
                     CREATE TABLE IF NOT EXISTS OCUPA(
                         ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -83,6 +91,7 @@ public class DataBaseManager {
                     )
                     """);
 
+            //tabla nomina
             statement.executeUpdate("""
                     CREATE TABLE IF NOT EXISTS NOMINA(
                         ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -95,6 +104,7 @@ public class DataBaseManager {
                     )
                     """);
         } catch (Exception e) {
+            //si no se ha podido crear las tablas devuelve error
             System.err.println("ERROR AL HACER LA BASE DE DATOS");
         }
     }

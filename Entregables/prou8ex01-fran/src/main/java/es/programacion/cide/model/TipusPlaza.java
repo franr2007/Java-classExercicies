@@ -1,5 +1,6 @@
 package es.programacion.cide.model;
 
+//modelo logico de tipusPlaza
 public class TipusPlaza {
     //atributos
     private int id;
@@ -36,7 +37,8 @@ public class TipusPlaza {
         return funcion;
     }
     //metodos
-
+    // cambia visualmente el contenido que devulvera dentro de los Jcombobox al
+    // verse en los paneles
     @Override
     public String toString() {
         return nom;

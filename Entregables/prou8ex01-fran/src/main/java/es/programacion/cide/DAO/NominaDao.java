@@ -11,12 +11,13 @@ import es.programacion.cide.model.Nomina;
 
 public class NominaDao implements Dao<Nomina, Integer> {
 
+    //metodo para insertar una Nomina
     @Override
     public void insertar(Nomina nomina) {
         // este es el comando en sqlite para insertar valores a la base de datos
         String comando = "INSERT INTO NOMINA (IBAN_PAGAMENT,IMPORT_REAL,NSS_EMPLEADO,CODI_PLAZA) VALUES(?,?,?,?)";
         // aqui se prepara la base de datos junto a su conexion y le pasamos el comando
-        try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando)) {
+        try (PreparedStatement statement = DataBaseManager.getConex().prepareStatement(comando)) {
             // por cada interrogante dentro de values recojemos los datos de la Nomina y se
             // pone en values
             statement.setString(1, nomina.getIbanPag());
@@ -31,16 +32,16 @@ public class NominaDao implements Dao<Nomina, Integer> {
         }
     }
 
+    //metodo para recojer una nomina por id
     @Override
     public Nomina recojerPorId(Integer id) {
         // este es el comando que servira para recojer una Nomina por id
         String comando = "SELECT * FROM NOMINA WHERE ID=?";
         // aqui se prepara la base de datos junto a su conexion y le pasamos el comando,
-        // ademas usamos resulset para ejecutar el comando
-        try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando)) {
+        try (PreparedStatement statement = DataBaseManager.getConex().prepareStatement(comando)) {
             // se le pasa el valor del interogante, con el id que se busca
             statement.setInt(1, id);
-            //ejecuta el comando
+            //resulset ejecuta el comando
             ResultSet resultado = statement.executeQuery();
             // este bucle lista las Nominas que contenga el numero de id
             while (resultado.next()) {
@@ -60,6 +61,7 @@ public class NominaDao implements Dao<Nomina, Integer> {
         return null;
     }
 
+    //metodo para listar todas las nominas
     @Override
     public List<Nomina> listarTodos() {
         // comando que se usara para listar todas las nominas
@@ -69,10 +71,10 @@ public class NominaDao implements Dao<Nomina, Integer> {
 
         // aqui se prepara la base de datos junto a su conexion y le pasamos el comando,
         // ademas usamos resulset para ejecutar el comando
-        try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando);
+        try (PreparedStatement statement = DataBaseManager.getConex().prepareStatement(comando);
                 ResultSet resultado = statement.executeQuery()) {
             
-            //bucle que listara la nomina segun cuantos resultados de el comando
+            //bucle que listara las nominas segun los resultados del comando
             while (resultado.next()) {
                 Nomina nomina = new Nomina();
                 nomina.setId(resultado.getInt("ID"));
@@ -90,13 +92,14 @@ public class NominaDao implements Dao<Nomina, Integer> {
         return listaNom;
     }
 
+    //metodo para editar una nomina
     @Override
     public void editar(Nomina nomina) {
         //este es el comando que se utilizara para hacer update a la nomina
         String comando = "UPDATE NOMINA SET IBAN_PAGAMENT=?, IMPORT_REAL=?, NSS_EMPLEADO=?, CODI_PLAZA=? WHERE ID=?";
 
         //aqui se prepara la base de datos junto a su conexion y le pasamos el comando
-        try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando)) {
+        try (PreparedStatement statement = DataBaseManager.getConex().prepareStatement(comando)) {
             // por cada interrogante se sustituira por el valor en orden de la nomina
             statement.setString(1, nomina.getIbanPag());
             statement.setDouble(2, nomina.getImporte());
@@ -104,24 +107,25 @@ public class NominaDao implements Dao<Nomina, Integer> {
             statement.setInt(4, nomina.getCodiPlaza());
             statement.setInt(5, nomina.getId());
 
-            statement.executeUpdate();
+            //ejecuta el comando
+            statement.executeUpdate();//update para modificar
         } catch (SQLException e) {
             // si el try devuelve error, se imprimira el mensaje
             System.err.println("Err editar NOMINA: " + e.getMessage());
         }
     }
 
+    //metodo para eliminar por id una nomina
     @Override
     public void eliminarPorId(Integer id) {
         //comando para eliminar nominas por id
         String comando = "DELETE FROM NOMINA WHERE ID=?";
         
         // aqui se prepara la base de datos junto a su conexion y le pasamos el comando,
-        // ademas usamos resulset para ejecutar el comando
-        try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando)) {
+        try (PreparedStatement statement = DataBaseManager.getConex().prepareStatement(comando)) {
             statement.setInt(1, id);
             //ejecuta el comando
-            statement.executeUpdate();
+            statement.executeUpdate();//update para modificar
         } catch (SQLException e) {
             // si el try devuelve error, se imprimira el mensaje
             System.err.println("Err Recojer NOMINA: " + e.getMessage());

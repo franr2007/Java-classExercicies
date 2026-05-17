@@ -21,7 +21,7 @@ public class PanelNomina extends PanelAbstractoGeneral {
     // constructor
     public PanelNomina() {
         // parametros de la tabla
-        super(new String[] { "ID", "IBAN_pagament", "Importe", "NSS Empleado", "CodigoPlaza" });
+        super(new String[] { "ID", "IBAN Pago", "Importe", "NSS Empleado", "CodigoPlaza" },"Busca por nss o Iban");
 
         nomDao = new NominaDao();
         plaDao = new PlazaDao();
@@ -49,36 +49,42 @@ public class PanelNomina extends PanelAbstractoGeneral {
         }
     }
 
-    // metodo para añadir un nomleado
+    // metodo para añadir una Nomina
     @Override
     protected void anadir() {
         Boolean valido = false;
         JTextField fieldIbanPag = new JTextField();
         JTextField fieldImporte = new JTextField();
         fieldImporte.setEditable(false);
-        JTextField fieldNssEmp = new JTextField();
-        JComboBox<Plaza> comboCodiPlaza = new JComboBox<>();
+        JComboBox<Empleado> comboEmp = new JComboBox<>();
+        JComboBox<Plaza> comboPla = new JComboBox<>();
 
         // esto es un array de objetos que tiene dentro los diferentes
         // campos que se van a rellenar
         Object[] campos = {
-                "IBAN pagament:", fieldIbanPag, "Importe:", fieldImporte, "Nss Empleado:", fieldNssEmp,
-                "Codigo Plaza:", comboCodiPlaza
+                "IBAN pago:", fieldIbanPag, "Importe:", fieldImporte, "Nss Empleado:", comboEmp,
+                "Codigo Plaza:", comboPla
         };
 
-        // mete dentro las plaza que ya existen
-        comboCodiPlaza.addItem(null);
-        //por cada plaza en la base de datos
-        for (Plaza pla : plaDao.listarTodos()) {
+        // mete dentro los Empleados que ya existen
+        comboEmp.addItem(null);
+        //por cada empleado en la base de datos
+        for (Empleado emp : empDao.listarTodos()) {
             //se mete en el combobox
-            comboCodiPlaza.addItem(pla);
+            comboEmp.addItem(emp);
+        }
+
+        // hace lo mismo que el anterior pero con plaza
+        comboPla.addItem(null);
+        for (Plaza pla : plaDao.listarTodos()) {
+            comboPla.addItem(pla);
         }
 
         //este actionListener hace que cada vez que se cambia de plaza
         //cambia el Jtextfield de importe por el salario de la plaza
-        comboCodiPlaza.addActionListener(e -> {
+        comboPla.addActionListener(e -> {
             //coje la plaza seleccionada
-            Plaza pla = (Plaza) comboCodiPlaza.getSelectedItem();
+            Plaza pla = (Plaza) comboPla.getSelectedItem();
             //si no esta vacia
             if (pla != null) {
                 //coje el salario de la plaza y mete el mismo valor
@@ -102,14 +108,23 @@ public class PanelNomina extends PanelAbstractoGeneral {
                 return;
 
             // si los valores son validos
-            if (validarCampos(fieldIbanPag, fieldImporte, fieldNssEmp, comboCodiPlaza, null)) {
+            if (validarCampos(fieldIbanPag, fieldImporte, comboEmp, comboPla, null)) {
                 Nomina nom = new Nomina(); // se crea un nueva Nomina
-                Plaza pla = (Plaza) comboCodiPlaza.getSelectedItem();
+                Empleado emp = (Empleado) comboEmp.getSelectedItem();
+                Plaza pla = (Plaza) comboPla.getSelectedItem();
                 Double importePla;
+                Long nssEmp;
 
                 // se controla el null
-                if (pla != null) {
+                if (emp != null) {
                     // asi el get no peta el programa
+                    nssEmp = emp.getNss();
+                } else {
+                    nssEmp = null;
+                }
+
+                //hace lo mismo que lo anterior pero con plaza
+                if (pla != null) {
                     importePla = pla.getSalari();
                 } else {
                     importePla = null;
@@ -119,7 +134,7 @@ public class PanelNomina extends PanelAbstractoGeneral {
                 // .trim() elimina los espacio que haya entre los textos
                 nom.setIbanPag(fieldIbanPag.getText().toUpperCase().trim());
                 nom.setImporte(importePla);
-                nom.setNssEmleado(Long.parseLong(fieldNssEmp.getText().trim()));
+                nom.setNssEmleado(nssEmp);
                 nom.setCodiPlaza(pla.getCodi());
 
                 // se llama a la funcion insertar de nomDao
@@ -170,29 +185,35 @@ public class PanelNomina extends PanelAbstractoGeneral {
         JTextField fieldIbanPag = new JTextField(nom.getIbanPag());
         JTextField fieldImporte = new JTextField(String.valueOf(nom.getImporte()));
         fieldImporte.setEditable(false);
-        JTextField fieldNssEmp = new JTextField(String.valueOf(nom.getNssEmpleado()));
-        JComboBox<Plaza> comboCodiPlaza = new JComboBox<>();
+        JComboBox<Empleado> comboEmp = new JComboBox<>();
+        JComboBox<Plaza> comboPla = new JComboBox<>();
 
         // esto es un array de objetos que tiene dentro los diferentes
         // campos que se van a rellenar
         Object[] campos = {
-                "IBAN pagament:", fieldIbanPag, "Importe:", fieldImporte, "Nss Empleado:", fieldNssEmp,
-                "Codigo Plaza:", comboCodiPlaza
+                "IBAN pago:", fieldIbanPag, "Importe:", fieldImporte, "Nss Empleado:", comboEmp,
+                "Codigo Plaza:", comboPla
         };
 
-        // mete dentro las plaza que ya existen
-        comboCodiPlaza.addItem(null);
-        //por cada plaza en la base de datos
-        for (Plaza pla : plaDao.listarTodos()) {
+        // mete dentro los empleados que ya existen
+        comboEmp.addItem(null);
+        //por cada empleado en la base de datos
+        for (Empleado emp : empDao.listarTodos()) {
             //se mete en el combobox
-            comboCodiPlaza.addItem(pla);
+            comboEmp.addItem(emp);
+        }
+
+        // hace lo mismo que el anterior pero con plaza
+        comboPla.addItem(null);
+        for (Plaza pla : plaDao.listarTodos()) {
+            comboPla.addItem(pla);
         }
 
         //este actionListener hace que cada vez que se cambia de plaza
         //cambia el Jtextfield de importe por el salario de la plaza
-        comboCodiPlaza.addActionListener(e -> {
+        comboPla.addActionListener(e -> {
             //coje la plaza seleccionada
-            Plaza pla = (Plaza) comboCodiPlaza.getSelectedItem();
+            Plaza pla = (Plaza) comboPla.getSelectedItem();
             //si no esta vacia
             if (pla != null) {
                 //coje el salario de la plaza y mete el mismo valor
@@ -216,13 +237,22 @@ public class PanelNomina extends PanelAbstractoGeneral {
                 return;
 
             // si los valores son validos
-            if (validarCampos(fieldIbanPag, fieldImporte, fieldNssEmp, comboCodiPlaza, id)) {
-                Plaza pla = (Plaza) comboCodiPlaza.getSelectedItem();
+            if (validarCampos(fieldIbanPag, fieldImporte, comboEmp, comboPla, id)) {
+                Empleado emp = (Empleado) comboEmp.getSelectedItem();
+                Plaza pla = (Plaza) comboPla.getSelectedItem();
                 Double importePla;
+                Long nssEmp;
 
                 // se controla el null
-                if (pla != null) {
+                if (emp != null) {
                     // asi el get no peta el programa
+                    nssEmp = emp.getNss();
+                } else {
+                    nssEmp = null;
+                }
+
+                //hace lo mismo que lo anterior pero con plaza
+                if (pla != null) {
                     importePla = pla.getSalari();
                 } else {
                     importePla = null;
@@ -232,7 +262,7 @@ public class PanelNomina extends PanelAbstractoGeneral {
                 // .trim() elimina los espacio que haya entre los textos
                 nom.setIbanPag(fieldIbanPag.getText().trim());
                 nom.setImporte(importePla);
-                nom.setNssEmleado(Long.parseLong(fieldNssEmp.getText().trim()));
+                nom.setNssEmleado(nssEmp);
                 nom.setCodiPlaza(pla.getCodi());
 
                 // llama a la funcion editar de nomDao
@@ -272,10 +302,10 @@ public class PanelNomina extends PanelAbstractoGeneral {
     // metodo privado que valida las condicionees que tiene que tener cada campo
     // dentro de su valor
     private boolean validarCampos(JTextField fieldIbanPag, JTextField fieldImporte,
-            JTextField fieldNssEmp, JComboBox<Plaza> comboCodiPla, Integer id) {
-
-        Plaza codiPla = (Plaza) comboCodiPla.getSelectedItem();
-        Boolean existe = false;
+            JComboBox<Empleado> comboEmp, JComboBox<Plaza> comboPla, Integer id) {
+        
+        Empleado emp = (Empleado) comboEmp.getSelectedItem();
+        Plaza pla = (Plaza) comboPla.getSelectedItem();
 
         // validar vacios
 
@@ -288,21 +318,12 @@ public class PanelNomina extends PanelAbstractoGeneral {
             JOptionPane.showMessageDialog(this, "El Importe es obligatorio");
             return false;
         }
-        if (fieldNssEmp.getText().trim().isEmpty()) {
+        if (emp==null) {
             JOptionPane.showMessageDialog(this, "El Nss del empleado es obligatorio");
             return false;
         }
-        if (codiPla == null) {
+        if (pla == null) {
             JOptionPane.showMessageDialog(this, "El Codigo de la plaza es obligatorio");
-            return false;
-        }
-
-        // validar nss
-
-        // coje el texto del textfiel del nss
-        // y con regex se valida el formato de que tenga 12 numeros
-        if (!fieldNssEmp.getText().trim().matches("\\d{12}")) {
-            JOptionPane.showMessageDialog(this, "El NSS debe tener 12 digitos");
             return false;
         }
 
@@ -316,23 +337,6 @@ public class PanelNomina extends PanelAbstractoGeneral {
             return false;
         }
 
-        // validar si existe nss
-        // por cada empleado en la base de datos
-        for (Empleado emp : empDao.listarTodos()) {
-            // se comprueba de que el que se ha puesto coincida con uno
-            if (emp.getNss() == Long.parseLong(fieldNssEmp.getText())) {
-                // si coincide es que existe
-                existe = true;
-            }
-        }
-
-        // si no existe
-        if (!existe) {
-            // devuelve un mensaje de error
-            JOptionPane.showMessageDialog(this, "No hay ningun empleado con ese nss");
-            return false;
-        }
-
         // validar duplicados
 
         // por cada Nomina dentro de la base de datos
@@ -342,19 +346,11 @@ public class PanelNomina extends PanelAbstractoGeneral {
             if (id != null && nom.getId() == id)
                 continue; // hace que no se comprueba el nom con si mismo
 
-            // si una nomina tiene el mismo nss que el de el textfield
-            if (nom.getNssEmpleado() == Long.parseLong(fieldNssEmp.getText().trim())) {
+            // si una nomina tiene el mismo nss que otro
+            if (nom.getNssEmpleado().equals(emp.getNss())) {
                 // devuelve un mensaje de error
                 JOptionPane.showMessageDialog(this, "ya existe un nomina con ese NSS");
                 return false; // y de vuelve falso
-            }
-
-            // si el iban de un nom es igual indiferentemente de las mayus y minusculas
-            // y es exactamente igual que el del textfield
-            if (nom.getIbanPag().equalsIgnoreCase(fieldIbanPag.getText().trim())) {
-                // devuelve un mensaje de error
-                JOptionPane.showMessageDialog(this, "Ya existe un nomina con ese IBAN");
-                return false;// y de vuelve falso
             }
         }
         return true;

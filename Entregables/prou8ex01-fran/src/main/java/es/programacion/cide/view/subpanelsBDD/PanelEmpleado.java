@@ -8,12 +8,12 @@ import es.programacion.cide.model.Empleado;
 public class PanelEmpleado extends PanelAbstractoGeneral {
 
     // atributos
-    private EmpleadoDao daoEmpleado = new EmpleadoDao();
+    private EmpleadoDao empDao = new EmpleadoDao();
 
     // constructor
     public PanelEmpleado() {
         // parametros de la tabla
-        super(new String[] { "ID", "NSS", "Nombre", "Apellido", "Email", "IBAN" });
+        super(new String[] { "ID", "NSS", "Nombre", "Apellido", "Email", "IBAN" }, "Busca por nombre y apellidos");
 
         // se cargan los datos para poder ver los empleados que hay
         cargarDatos();
@@ -29,7 +29,7 @@ public class PanelEmpleado extends PanelAbstractoGeneral {
         modelotabla.setRowCount(0);
 
         // Por cada empleado dentro de la base de datos se creara una fila con su info
-        for (Empleado emp : daoEmpleado.listarTodos()) {
+        for (Empleado emp : empDao.listarTodos()) {
             modelotabla.addRow(new Object[] {
                     emp.getId(), emp.getNss(), emp.getNom(),
                     emp.getApellidos(), emp.getEmail(), emp.getIban()
@@ -80,7 +80,7 @@ public class PanelEmpleado extends PanelAbstractoGeneral {
 
                 // se llama a la funcion insertar de empDao
                 // para insertar la info en la base de datos
-                daoEmpleado.insertar(emp);
+                empDao.insertar(emp);
 
                 // se vuelve a cargar los datos para actualizar la tabla
                 cargarDatos();
@@ -105,7 +105,7 @@ public class PanelEmpleado extends PanelAbstractoGeneral {
         if (eleccion == JOptionPane.YES_OPTION) {
             // se llama a la funcion eliminar de empDao
             // que hara el comando para eliminarlo de la base de datos
-            daoEmpleado.eliminarPorId(id);
+            empDao.eliminarPorId(id);
 
             // y se actualizara la tabla
             cargarDatos();
@@ -118,7 +118,7 @@ public class PanelEmpleado extends PanelAbstractoGeneral {
     protected void editar(Integer id) {
         if (id == null)
             return; // si no hay id no hace nada
-        Empleado emp = daoEmpleado.recojerPorId(id);
+        Empleado emp = empDao.recojerPorId(id);
         if (emp == null)
             return; // si no hay empleado con ese id no hace nada
 
@@ -161,7 +161,8 @@ public class PanelEmpleado extends PanelAbstractoGeneral {
 
                 // llama a la funcion editar de empDao
                 // que es la funcion que ejcutara el comando sql
-                daoEmpleado.editar(emp);
+                empDao.editar(emp);
+                //carga los datos
                 cargarDatos();
                 valido = true; // sale del while
             }
@@ -175,7 +176,7 @@ public class PanelEmpleado extends PanelAbstractoGeneral {
         modelotabla.setRowCount(0);
 
         // Por cada empleado dentro de la base de datos
-        for (Empleado emp : daoEmpleado.listarTodos()) {
+        for (Empleado emp : empDao.listarTodos()) {
             // cojera su nombre completo
             String nombreCompleto = (emp.getNom() + " " + emp.getApellidos()).toLowerCase();
 
@@ -239,7 +240,7 @@ public class PanelEmpleado extends PanelAbstractoGeneral {
         // validar duplicados
 
         // por cada empleado dentro de la base de datos
-        for (Empleado emp : daoEmpleado.listarTodos()) {
+        for (Empleado emp : empDao.listarTodos()) {
 
             // si tiene una id ya asignada es que esta editando
             if (id != null && emp.getId() == id)
