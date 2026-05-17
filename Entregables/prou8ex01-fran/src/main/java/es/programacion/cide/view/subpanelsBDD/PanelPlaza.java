@@ -57,13 +57,13 @@ public class PanelPlaza extends PanelAbstractoGeneral {
         JTextField fieldInforme = new JTextField();
         JComboBox<TipusPlaza> comboTipoPla = new JComboBox<>();
 
-        //mete dentro plazas que ya hay
+        //mete dentro plazas que ya existen
         comboPlaSuper.addItem(null);
         for (Plaza p : plaDao.listarTodos()) {
             comboPlaSuper.addItem(p);
         }
 
-        //mete dentro los tipos de plaza que ya hay
+        //mete dentro los tipos de plaza que ya existen
         for (TipusPlaza t : tipusPlaDao.listarTodos()) {
             comboTipoPla.addItem(t);
         }
@@ -80,7 +80,7 @@ public class PanelPlaza extends PanelAbstractoGeneral {
 
             // showConfirmDialog hace un JOptionPane con el array de objetos anterior
             // y guarda si cancela o no la operacion
-            int formNuevapla = JOptionPane.showConfirmDialog(this, campos, "Nuevo plaleado",
+            int formNuevapla = JOptionPane.showConfirmDialog(this, campos, "Nueva Plaza",
                     JOptionPane.OK_CANCEL_OPTION);
 
             // si el usuario cancela sale de la funcion añadir
@@ -185,7 +185,7 @@ public class PanelPlaza extends PanelAbstractoGeneral {
 
             // showConfirmDialog hace un JOptionPane con el array de objetos anterior
             // y guarda si cancela o no la operacion
-            int formEditarPla = JOptionPane.showConfirmDialog(this, campos, "Nuevo plaleado",
+            int formEditarPla = JOptionPane.showConfirmDialog(this, campos, "Editar plaza",
                     JOptionPane.OK_CANCEL_OPTION);
 
             // si el usuario cancela sale de la funcion editar
@@ -288,7 +288,7 @@ public class PanelPlaza extends PanelAbstractoGeneral {
         }
 
         try {
-            Integer.parseInt(fieldSalari.getText().trim());
+            Double.parseDouble(fieldSalari.getText().trim());
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this,
                     "El salario debe ser un numero");
@@ -297,7 +297,7 @@ public class PanelPlaza extends PanelAbstractoGeneral {
 
         // validar supervisar a si mismo
 
-        if (codiSuper != null && codiSuper.getCodi() == codi) {
+        if (codiSuper != null && codi != null && codiSuper.getCodi() == codi) {
             JOptionPane.showMessageDialog(this, "Una plaza no se puede supervisar a si misma");
             return false;
         }
@@ -311,8 +311,8 @@ public class PanelPlaza extends PanelAbstractoGeneral {
             if (codi != null && pla.getCodi() == codi)
                 continue; // hace que no se compruebe pla con si mismo
 
-            // si una Plaza tiene el mismo nss que el de el textfield
-            if (pla.getCodi() == Integer.parseInt(fieldCodi.getText().trim())) {
+            // si una Plaza tiene el mismo nss que el de el textfield ya tiene codigo
+            if (fieldCodi != null && pla.getCodi() == Integer.parseInt(fieldCodi.getText().trim())) {
                 // devuelve un mensaje de error
                 JOptionPane.showMessageDialog(this, "Ya existe una Plaza con ese codigo");
                 return false; // y de vuelve falso

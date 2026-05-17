@@ -36,4 +36,9 @@ public class TipusPlaza {
         return funcion;
     }
     //metodos
+
+    @Override
+    public String toString() {
+        return nom;
+    }
 }

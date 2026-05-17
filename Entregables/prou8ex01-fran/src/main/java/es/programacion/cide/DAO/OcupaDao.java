@@ -18,10 +18,11 @@ public class OcupaDao implements Dao<Ocupa, Integer> {
         try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando)) {
             // por cada interrogante dentro de values recojemos los datos de la plaza y se
             // pone en values
-            statement.setInt(1, ocupa.getNssEmp());
+            statement.setLong(1, ocupa.getNssEmp());
             statement.setInt(2, ocupa.getCodiPlaza());
             statement.setString(3, ocupa.getDataInici());
             statement.setString(4, ocupa.getDataFi());
+            statement.executeUpdate();
         } catch (SQLException e) {
             // en caso de error al preparar la conexion, se imprime el mensaje del error
             System.err.println("Err insert ocupa: " + e.getMessage());
@@ -42,7 +43,8 @@ public class OcupaDao implements Dao<Ocupa, Integer> {
             // este bucle lista el que ocupa que contenga el numero de id
             while (resultado.next()) {
                 Ocupa ocupa = new Ocupa();
-                ocupa.setNssEmp(resultado.getInt("NSS_EMPLEADO"));
+                ocupa.setId(resultado.getInt("ID"));
+                ocupa.setNssEmp(resultado.getLong("NSS_EMPLEADO"));
                 ocupa.setCodiPlaza(resultado.getInt("CODI_PLAZA"));
                 ocupa.setDataInici(resultado.getString("DATA_INICI"));
                 ocupa.setDataFi(resultado.getString("DATA_FI"));
@@ -72,7 +74,8 @@ public class OcupaDao implements Dao<Ocupa, Integer> {
             //bucle que listara la plaza segun cuantos resultados de el comando
             while (resultado.next()) {
                 Ocupa ocupa = new Ocupa();
-                ocupa.setNssEmp(resultado.getInt("NSS_EMPLEADO"));
+                ocupa.setId(resultado.getInt("ID"));
+                ocupa.setNssEmp(resultado.getLong("NSS_EMPLEADO"));
                 ocupa.setCodiPlaza(resultado.getInt("CODI_PLAZA"));
                 ocupa.setDataInici(resultado.getString("DATA_INICI"));
                 ocupa.setDataFi(resultado.getString("DATA_FI"));
@@ -95,7 +98,7 @@ public class OcupaDao implements Dao<Ocupa, Integer> {
         //aqui se prepara la base de datos junto a su conexion y le pasamos el comando
         try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando)) {
             // por cada interrogante se sustituira por el valor en orden de la plaza
-            statement.setInt(1, ocupa.getNssEmp());
+            statement.setLong(1, ocupa.getNssEmp());
             statement.setInt(2, ocupa.getCodiPlaza());
             statement.setString(3, ocupa.getDataInici());
             statement.setString(4, ocupa.getDataFi());
@@ -111,23 +114,15 @@ public class OcupaDao implements Dao<Ocupa, Integer> {
     @Override
     public void eliminarPorId(Integer id) {
         //comando para eliminar ocupa por id
-        String comando = "DELETE * FROM OCUPA WHERE ID=?";
+        String comando = "DELETE FROM OCUPA WHERE ID=?";
         
         // aqui se prepara la base de datos junto a su conexion y le pasamos el comando,
         // ademas usamos resulset para ejecutar el comando
         try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando);
                 ResultSet resultado = statement.executeQuery()) {
             statement.setInt(1, id);
-            
-            // este bucle elimina los que ocupan que contenga el numero de id
-            while (resultado.next()) {
-                Ocupa ocupa = new Ocupa();
-                ocupa.setNssEmp(resultado.getInt("NSS_EMPLEADO"));
-                ocupa.setCodiPlaza(resultado.getInt("CODI_PLAZA"));
-                ocupa.setDataInici(resultado.getString("DATA_INICI"));
-                ocupa.setDataFi(resultado.getString("DATA_FI"));
-
-            }
+            //ejecuta el comando
+            statement.executeUpdate();
         } catch (SQLException e) {
             // si el try devuelve error, se imprimira el mensaje
             System.err.println("Err Recojer ocupa: " + e.getMessage());

@@ -31,7 +31,6 @@ public abstract class PanelAbstractoGeneral extends JPanel {
 
         add(panelBuscador(), BorderLayout.NORTH);
         add(new JScrollPane(tabla), BorderLayout.CENTER);
-        add(panelBotones(), BorderLayout.SOUTH);
     }
 
     // getters y setters
@@ -47,38 +46,25 @@ public abstract class PanelAbstractoGeneral extends JPanel {
 
         JButton btnBuscar = new JButton("Buscar");
         JButton btnAnadir = new JButton("Añadir");
-        JButton btnActualizar = new JButton("Refrescar");
-
-        btnBuscar.addActionListener(e -> buscar(buscador.getText().trim().toLowerCase()));
-        btnAnadir.addActionListener(e -> anadir());
-        btnActualizar.addActionListener(e -> cargarDatos());
-
-        JPanel btnsDerecha = new JPanel(new FlowLayout(FlowLayout.LEFT, 4, 0));
-        btnsDerecha.add(btnAnadir);
-        btnsDerecha.add(btnActualizar);
-
-        panel.add(buscador, BorderLayout.CENTER);
-        panel.add(btnBuscar, BorderLayout.EAST);
-        panel.add(btnsDerecha, BorderLayout.WEST);
-
-        return panel;
-    }
-
-    // panel de boton eliminar y editar
-    private JPanel panelBotones() {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 6, 0));
-
         JButton btnEditar = new JButton("Editar");
         JButton btnEliminar = new JButton("Eliminar");
 
+        btnBuscar.addActionListener(e -> buscar(buscador.getText().trim().toLowerCase()));
+        btnAnadir.addActionListener(e -> anadir());
+        btnAnadir.setForeground(new Color(46, 125, 50));//color verde para añadir
         btnEditar.addActionListener(e -> editar(getIdSeleccionado()));
+        btnEditar.setForeground(new Color(30, 136, 229));//color azul para editar
         btnEliminar.addActionListener(e -> eliminar(getIdSeleccionado()));
+        btnEliminar.setForeground(new Color(198, 40, 40)); //color rojo para eliminar
 
-        // Eliminar en rojo para que destaque visualmente
-        btnEliminar.setForeground(Color.RED);
+        JPanel btnsIzquierda = new JPanel(new FlowLayout(FlowLayout.LEFT, 4, 0));
+        btnsIzquierda.add(btnAnadir);
+        btnsIzquierda.add(btnEditar);
+        btnsIzquierda.add(btnEliminar);
 
-        panel.add(btnEditar);
-        panel.add(btnEliminar);
+        panel.add(buscador, BorderLayout.CENTER);
+        panel.add(btnBuscar, BorderLayout.EAST);
+        panel.add(btnsIzquierda, BorderLayout.WEST);
 
         return panel;
     }
@@ -90,7 +76,7 @@ public abstract class PanelAbstractoGeneral extends JPanel {
         int fila = tabla.getSelectedRow();
         // si no hay filas seleccionadas
         if (fila == -1) {
-            JOptionPane.showMessageDialog(this, "Selecciona un registre");
+            JOptionPane.showMessageDialog(this, "Selecciona una fila");
             return null;
         }
         return (Integer) modelotabla.getValueAt(fila, 0);// devuelve el id de la fila

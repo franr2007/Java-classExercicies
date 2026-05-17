@@ -141,7 +141,7 @@ public class PanelEmpleado extends PanelAbstractoGeneral {
 
             // showConfirmDialog hace un JOptionPane con el array de objetos anterior
             // y guarda si cancela o no la operacion
-            int formEditarEmp = JOptionPane.showConfirmDialog(this, campos, "Nuevo empleado",
+            int formEditarEmp = JOptionPane.showConfirmDialog(this, campos, "Editar empleado",
                     JOptionPane.OK_CANCEL_OPTION);
 
             // si el usuario cancela sale de la funcion editar

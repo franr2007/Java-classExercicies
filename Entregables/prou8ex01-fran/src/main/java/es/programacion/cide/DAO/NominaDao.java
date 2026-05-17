@@ -20,9 +20,11 @@ public class NominaDao implements Dao<Nomina, Integer> {
             // por cada interrogante dentro de values recojemos los datos de la Nomina y se
             // pone en values
             statement.setString(1, nomina.getIbanPag());
-            statement.setString(2, nomina.getImporte());
+            statement.setDouble(2, nomina.getImporte());
             statement.setLong(3, nomina.getNssEmpleado());
             statement.setInt(4, nomina.getCodiPlaza());
+            //ejecuta el comando
+            statement.executeUpdate();
         } catch (SQLException e) {
             // en caso de error al preparar la conexion, se imprime el mensaje del error
             System.err.println("Err insert Nomina: " + e.getMessage());
@@ -35,16 +37,17 @@ public class NominaDao implements Dao<Nomina, Integer> {
         String comando = "SELECT * FROM NOMINA WHERE ID=?";
         // aqui se prepara la base de datos junto a su conexion y le pasamos el comando,
         // ademas usamos resulset para ejecutar el comando
-        try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando);
-                ResultSet resultado = statement.executeQuery()) {
+        try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando)) {
             // se le pasa el valor del interogante, con el id que se busca
             statement.setInt(1, id);
-
+            //ejecuta el comando
+            ResultSet resultado = statement.executeQuery();
             // este bucle lista las Nominas que contenga el numero de id
             while (resultado.next()) {
                 Nomina nomina = new Nomina();
+                nomina.setId(resultado.getInt("ID"));
                 nomina.setIbanPag(resultado.getString("IBAN_PAGAMENT"));
-                nomina.setImporte(resultado.getString("IMPORT_REAL"));
+                nomina.setImporte(resultado.getDouble("IMPORT_REAL"));
                 nomina.setNssEmleado(resultado.getLong("NSS_EMPLEADO"));
                 nomina.setCodiPlaza(resultado.getInt("CODI_PLAZA"));
                 return nomina;
@@ -72,8 +75,9 @@ public class NominaDao implements Dao<Nomina, Integer> {
             //bucle que listara la nomina segun cuantos resultados de el comando
             while (resultado.next()) {
                 Nomina nomina = new Nomina();
+                nomina.setId(resultado.getInt("ID"));
                 nomina.setIbanPag(resultado.getString("IBAN_PAGAMENT"));
-                nomina.setImporte(resultado.getString("IMPORT_REAL"));
+                nomina.setImporte(resultado.getDouble("IMPORT_REAL"));
                 nomina.setNssEmleado(resultado.getLong("NSS_EMPLEADO"));
                 nomina.setCodiPlaza(resultado.getInt("CODI_PLAZA"));
                 listaNom.add(nomina);//se añade a la lista
@@ -95,7 +99,7 @@ public class NominaDao implements Dao<Nomina, Integer> {
         try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando)) {
             // por cada interrogante se sustituira por el valor en orden de la nomina
             statement.setString(1, nomina.getIbanPag());
-            statement.setString(2, nomina.getImporte());
+            statement.setDouble(2, nomina.getImporte());
             statement.setLong(3, nomina.getNssEmpleado());
             statement.setInt(4, nomina.getCodiPlaza());
             statement.setInt(5, nomina.getId());
@@ -110,22 +114,14 @@ public class NominaDao implements Dao<Nomina, Integer> {
     @Override
     public void eliminarPorId(Integer id) {
         //comando para eliminar nominas por id
-        String comando = "DELETE * FROM NOMINA WHERE ID=?";
+        String comando = "DELETE FROM NOMINA WHERE ID=?";
         
         // aqui se prepara la base de datos junto a su conexion y le pasamos el comando,
         // ademas usamos resulset para ejecutar el comando
-        try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando);
-                ResultSet resultado = statement.executeQuery()) {
+        try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando)) {
             statement.setInt(1, id);
-            
-            // este bucle elimina las nominas que contenga el numero de id
-            while (resultado.next()) {
-                Nomina nomina = new Nomina();
-                nomina.setIbanPag(resultado.getString("IBAN_PAGAMENT"));
-                nomina.setImporte(resultado.getString("IMPORT_REAL"));
-                nomina.setNssEmleado(resultado.getLong("NSS_EMPLEADO"));
-                nomina.setCodiPlaza(resultado.getInt("CODI_PLAZA"));
-            }
+            //ejecuta el comando
+            statement.executeUpdate();
         } catch (SQLException e) {
             // si el try devuelve error, se imprimira el mensaje
             System.err.println("Err Recojer NOMINA: " + e.getMessage());

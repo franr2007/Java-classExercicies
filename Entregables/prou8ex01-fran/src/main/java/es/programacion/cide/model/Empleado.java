@@ -71,4 +71,9 @@ public class Empleado {
         this.iban = iban;
     }
     // metodos
+
+    @Override
+    public String toString() {
+        return String.valueOf(nss)+" "+nom+"-"+apellidos;
+    }
 }

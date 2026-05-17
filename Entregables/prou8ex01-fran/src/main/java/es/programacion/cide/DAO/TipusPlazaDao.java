@@ -43,6 +43,7 @@ public class TipusPlazaDao implements Dao<TipusPlaza, Integer> {
             // este bucle lista las tipusPlazas que contenga el numero de id
             while (resultado.next()) {
                 TipusPlaza tipusPlaza = new TipusPlaza();
+                tipusPlaza.setId(resultado.getInt("ID"));
                 tipusPlaza.setNom(resultado.getString("NOM"));
                 tipusPlaza.setFuncion(resultado.getString("FUNCIO"));
                 
@@ -71,6 +72,7 @@ public class TipusPlazaDao implements Dao<TipusPlaza, Integer> {
             //bucle que listara la tipusPlaza segun cuantos resultados de el comando
             while (resultado.next()) {
                 TipusPlaza tipusPlaza = new TipusPlaza();
+                tipusPlaza.setId(resultado.getInt("ID"));
                 tipusPlaza.setNom(resultado.getString("NOM"));
                 tipusPlaza.setFuncion(resultado.getString("FUNCIO"));
 
@@ -96,6 +98,7 @@ public class TipusPlazaDao implements Dao<TipusPlaza, Integer> {
             statement.setString(2, tipusPlaza.getFuncion());
             statement.setInt(3, tipusPlaza.getId());
 
+            //ejcuta el comando
             statement.executeUpdate();
         } catch (SQLException e) {
             // si el try devuelve error, se imprimira el mensaje
@@ -114,15 +117,8 @@ public class TipusPlazaDao implements Dao<TipusPlaza, Integer> {
             // se le pasa el valor del interogante, con el id que se busca
             statement.setInt(1, id);
 
-            //se usa resulset para ejecutar el comando
-            ResultSet resultado = statement.executeQuery();
-            
-            // este bucle elimina las tipusPlazas que contenga el numero de id
-            while (resultado.next()) {
-                TipusPlaza tipusPlaza = new TipusPlaza();
-                tipusPlaza.setNom(resultado.getString("NOM"));
-                tipusPlaza.setFuncion(resultado.getString("FUNCIO"));
-            }
+            //ejcuta el comando
+            statement.executeUpdate();
         } catch (SQLException e) {
             // si el try devuelve error, se imprimira el mensaje
             System.err.println("Err Recojer tipusPlaza: " + e.getMessage());

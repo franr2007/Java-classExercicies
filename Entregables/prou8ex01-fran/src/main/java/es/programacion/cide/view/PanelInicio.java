@@ -57,7 +57,7 @@ public class PanelInicio extends JPanel {
         fuenteTxt = new Font("Courier New", 1, 20);
 
         // titulo
-        titulo = new JLabel("· Gestionador de datos ·");
+        titulo = new JLabel("· Sistema de Gestión Laboral ·");
 
         // tamaño del label
         labelSize = new Dimension(150, 25);
@@ -163,7 +163,7 @@ public class PanelInicio extends JPanel {
         // estilo titulo
         fuenteTxt = new Font("SansSerif", Font.BOLD, 100);
         titulo.setFont(fuenteTxt);
-        titulo.setForeground(Color.LIGHT_GRAY);
+        titulo.setForeground(new Color(160, 160, 160));
     }
 
     // pinta el fondo

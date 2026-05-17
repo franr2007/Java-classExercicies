@@ -3,7 +3,7 @@ package es.programacion.cide.model;
 public class Ocupa {
     //atributos
     private int id;
-    private int nssEmpleado;
+    private Long nssEmpleado;
     private int codiPlaza;
     private String dataInici;
     private String dataFi;
@@ -13,7 +13,7 @@ public class Ocupa {
 
     }
 
-    public Ocupa(int id, int nssEmpleado, int codiPlaza, String dataInici, String dataFi){
+    public Ocupa(int id, Long nssEmpleado, int codiPlaza, String dataInici, String dataFi){
         this.id=id;
         this.nssEmpleado=nssEmpleado;
         this.codiPlaza=codiPlaza;
@@ -29,10 +29,10 @@ public class Ocupa {
         return id;
     }
 
-    public void setNssEmp(int nssEmpleado){
+    public void setNssEmp(Long nssEmpleado){
         this.nssEmpleado=nssEmpleado;
     }
-    public int getNssEmp(){
+    public Long getNssEmp(){
         return nssEmpleado;
     }
 

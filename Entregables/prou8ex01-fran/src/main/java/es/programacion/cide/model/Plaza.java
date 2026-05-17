@@ -5,14 +5,14 @@ public class Plaza {
     private int codi;
     private String nom;
     private Double salari;
-    private int codiPlaSuper;
+    private Integer codiPlaSuper;
     private String informeSuper;
     private String tipoPlaza;
     //constructor
     public Plaza(){
     }
 
-    public Plaza(int codi, String nom, Double salari, int codiPlaSuper, String informeSuper, String tipoPlaza){
+    public Plaza(int codi, String nom, Double salari, Integer codiPlaSuper, String informeSuper, String tipoPlaza){
         this.codi=codi;
         this.nom=nom;
         this.salari=salari;
@@ -42,10 +42,10 @@ public class Plaza {
         return salari;
     }
 
-    public void setCodiPlaSuper(int codiPlaSuper){
+    public void setCodiPlaSuper(Integer codiPlaSuper){
         this.codiPlaSuper=codiPlaSuper;
     }
-    public int getCodiPlaSuper(){
+    public Integer getCodiPlaSuper(){
         return codiPlaSuper;
     }
 
@@ -64,4 +64,8 @@ public class Plaza {
     }
     
     //metodos
+    @Override
+    public String toString() {
+        return String.valueOf(codi)+" "+nom +"-"+tipoPlaza;
+    }
 }

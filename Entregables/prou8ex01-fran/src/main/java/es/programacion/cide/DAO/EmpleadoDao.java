@@ -20,7 +20,8 @@ public class EmpleadoDao implements Dao<Empleado, Integer> {
             statement.setString(3, empleado.getApellidos());
             statement.setString(4, empleado.getEmail());
             statement.setString(5, empleado.getIban());
-            statement.executeUpdate(); // CORRECCIÓN: faltaba ejecutar el comando, sin esto no se guardaba nada
+            //ejecuta el comando
+            statement.executeUpdate();
         } catch (SQLException e) {
             // en caso de error al preparar la conexion, se imprime el mensaje del error
             System.err.println("Err insert empleado: " + e.getMessage());
@@ -38,7 +39,7 @@ public class EmpleadoDao implements Dao<Empleado, Integer> {
             // este bucle lista a los empleados que contenga el numero de id
             while (resultado.next()) {
                 Empleado empleado = new Empleado();
-                empleado.setId(resultado.getInt("ID")); // CORRECCIÓN: faltaba recojer el ID
+                empleado.setId(resultado.getInt("ID"));
                 empleado.setNss(resultado.getLong("NSS"));
                 empleado.setNom(resultado.getString("NOM"));
                 empleado.setApellidos(resultado.getString("APELLIDOS"));
@@ -67,7 +68,7 @@ public class EmpleadoDao implements Dao<Empleado, Integer> {
             // bucle que listara al empleado segun la cantidad de resultados del comando
             while (resultado.next()) {
                 Empleado empleado = new Empleado();
-                empleado.setId(resultado.getInt("ID")); // CORRECCIÓN: faltaba recojer el ID
+                empleado.setId(resultado.getInt("ID"));
                 empleado.setNss(resultado.getLong("NSS"));
                 empleado.setNom(resultado.getString("NOM"));
                 empleado.setApellidos(resultado.getString("APELLIDOS"));
@@ -105,11 +106,12 @@ public class EmpleadoDao implements Dao<Empleado, Integer> {
     @Override
     public void eliminarPorId(Integer id) {
         // comando para eliminar empleados por id
-        String comando = "DELETE FROM EMPLEADO WHERE ID=?"; // CORRECCIÓN: DELETE no lleva * en SQL
+        String comando = "DELETE FROM EMPLEADO WHERE ID=?";
         // aqui se prepara la base de datos junto a su conexion y le pasamos el comando
         try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando)) {
             statement.setInt(1, id);
-            statement.executeUpdate(); // CORRECCIÓN: DELETE usa executeUpdate, no ResultSet
+            //ejecuta el comando
+            statement.executeUpdate();
         } catch (SQLException e) {
             // si el try devuelve error, se imprimira el mensaje
             System.err.println("Err eliminar empleado: " + e.getMessage());

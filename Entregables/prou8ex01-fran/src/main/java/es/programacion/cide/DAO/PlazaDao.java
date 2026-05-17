@@ -1,4 +1,5 @@
 package es.programacion.cide.DAO;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,7 +14,7 @@ public class PlazaDao implements Dao<Plaza, Integer> {
     @Override
     public void insertar(Plaza plaza) {
         // este es el comando en sqlite para insertar valores a la base de datos
-        String comando = "INSERT INTO PLAZA (NOM,SALARI_REAL,INFORME_SUPERVISIO,CODI_PLAZA_SUPERVISORA, NOM_TIPUS_PLAZA) VALUES(?,?,?,?,?)";
+        String comando = "INSERT INTO PLAZA (NOM,SALARI,INFORME_SUPERVISIO,CODI_PLAZA_SUPERVISORA, NOM_TIPUS_PLAZA) VALUES(?,?,?,?,?)";
         // aqui se prepara la base de datos junto a su conexion y le pasamos el comando
         try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando)) {
             // por cada interrogante dentro de values recojemos los datos de la plaza y se
@@ -21,8 +22,16 @@ public class PlazaDao implements Dao<Plaza, Integer> {
             statement.setString(1, plaza.getNom());
             statement.setDouble(2, plaza.getSalari());
             statement.setString(3, plaza.getInformeSuper());
-            statement.setInt(4, plaza.getCodiPlaSuper());
+            // si no tiene plaza supervisora
+            if (plaza.getCodiPlaSuper() != null) {
+                statement.setInt(4, plaza.getCodiPlaSuper());
+            } else {
+                // lo guarda como
+                statement.setNull(4, java.sql.Types.INTEGER);
+            }
             statement.setString(5, plaza.getipoPlaza());
+            // ejecuta el comando
+            statement.executeUpdate();
         } catch (SQLException e) {
             // en caso de error al preparar la conexion, se imprime el mensaje del error
             System.err.println("Err insert plaza: " + e.getMessage());
@@ -35,20 +44,23 @@ public class PlazaDao implements Dao<Plaza, Integer> {
         String comando = "SELECT * FROM PLAZA WHERE CODI=?";
         // aqui se prepara la base de datos junto a su conexion y le pasamos el comando,
         // ademas usamos resulset para ejecutar el comando
-        try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando);
-                ResultSet resultado = statement.executeQuery()) {
+        try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando)) {
             // se le pasa el valor del interogante, con el codi que se busca
             statement.setInt(1, codi);
+
+            //ejecuta el comando
+            ResultSet resultado = statement.executeQuery();
 
             // este bucle lista las plazas que contenga el numero de codi
             while (resultado.next()) {
                 Plaza plaza = new Plaza();
+                plaza.setCodi(resultado.getInt("CODI"));
                 plaza.setNom(resultado.getString("NOM"));
-                plaza.setSalari(resultado.getDouble("SALARI_REAL"));
+                plaza.setSalari(resultado.getDouble("SALARI"));
                 plaza.setInformeSuper(resultado.getString("INFORME_SUPERVISIO"));
                 plaza.setCodiPlaSuper(resultado.getInt("CODI_PLAZA_SUPERVISORA"));
                 plaza.setipoPlaza(resultado.getString("NOM_TIPUS_PLAZA"));
-                
+
                 return plaza;
             }
         } catch (SQLException e) {
@@ -70,16 +82,17 @@ public class PlazaDao implements Dao<Plaza, Integer> {
         // ademas usamos resulset para ejecutar el comando
         try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando);
                 ResultSet resultado = statement.executeQuery()) {
-            
-            //bucle que listara la plaza segun cuantos resultados de el comando
+
+            // bucle que listara la plaza segun cuantos resultados de el comando
             while (resultado.next()) {
                 Plaza plaza = new Plaza();
+                plaza.setCodi(resultado.getInt("CODI"));
                 plaza.setNom(resultado.getString("NOM"));
-                plaza.setSalari(resultado.getDouble("SALARI_REAL"));
+                plaza.setSalari(resultado.getDouble("SALARI"));
                 plaza.setInformeSuper(resultado.getString("INFORME_SUPERVISIO"));
                 plaza.setCodiPlaSuper(resultado.getInt("CODI_PLAZA_SUPERVISORA"));
                 plaza.setipoPlaza(resultado.getString("NOM_TIPUS_PLAZA"));
-                listaPla.add(plaza);//se añade a la lista
+                listaPla.add(plaza);// se añade a la lista
             }
         } catch (SQLException e) {
             // si el try devuelve error, se imprimira el mensaje
@@ -91,16 +104,22 @@ public class PlazaDao implements Dao<Plaza, Integer> {
 
     @Override
     public void editar(Plaza plaza) {
-        //este es el comando que se utilizara para hacer update a la plaza
-        String comando = "UPDATE PLAZA SET NOM=?, SALARI_REAL=?, INFORME_SUPERVISIO=?, CODI_PLAZA_SUPERVISORA=?, NOM_TIPUS_PLAZA=? WHERE CODI=?";
+        // este es el comando que se utilizara para hacer update a la plaza
+        String comando = "UPDATE PLAZA SET NOM=?, SALARI=?, INFORME_SUPERVISIO=?, CODI_PLAZA_SUPERVISORA=?, NOM_TIPUS_PLAZA=? WHERE CODI=?";
 
-        //aqui se prepara la base de datos junto a su conexion y le pasamos el comando
+        // aqui se prepara la base de datos junto a su conexion y le pasamos el comando
         try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando)) {
             // por cada interrogante se sustituira por el valor en orden de la plaza
             statement.setString(1, plaza.getNom());
             statement.setDouble(2, plaza.getSalari());
             statement.setString(3, plaza.getInformeSuper());
-            statement.setInt(4, plaza.getCodiPlaSuper());
+            // si no tiene plaza supervisora
+            if (plaza.getCodiPlaSuper() != null) {
+                statement.setInt(4, plaza.getCodiPlaSuper());
+            } else {
+                // lo guarda como
+                statement.setNull(4, java.sql.Types.INTEGER);
+            }
             statement.setString(5, plaza.getipoPlaza());
             statement.setInt(6, plaza.getCodi());
 
@@ -113,27 +132,18 @@ public class PlazaDao implements Dao<Plaza, Integer> {
 
     @Override
     public void eliminarPorId(Integer codi) {
-        //comando para eliminar plazas por codi
-        String comando = "DELETE * FROM PLAZA WHERE CODI=?";
-        
+        // comando para eliminar plazas por codi
+        String comando = "DELETE FROM PLAZA WHERE CODI=?";
+
         // aqui se prepara la base de datos junto a su conexion y le pasamos el comando,
         // ademas usamos resulset para ejecutar el comando
-        try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando);
-                ResultSet resultado = statement.executeQuery()) {
+        try (PreparedStatement statement = DataBaseManager.getConnection().prepareStatement(comando)) {
             statement.setInt(1, codi);
-            
-            // este bucle elimina las plazas que contenga el numero de codi
-            while (resultado.next()) {
-                Plaza plaza = new Plaza();
-                plaza.setNom(resultado.getString("NOM"));
-                plaza.setSalari(resultado.getDouble("SALARI_REAL"));
-                plaza.setInformeSuper(resultado.getString("INFORME_SUPERVISIO"));
-                plaza.setCodiPlaSuper(resultado.getInt("CODI_PLAZA_SUPERVISORA"));
-                plaza.setipoPlaza(resultado.getString("NOM_TIPUS_PLAZA"));
-            }
+            // ejecuta el comando
+            statement.executeUpdate();
         } catch (SQLException e) {
             // si el try devuelve error, se imprimira el mensaje
             System.err.println("Err Recojer plaza: " + e.getMessage());
         }
-}
+    }
 }

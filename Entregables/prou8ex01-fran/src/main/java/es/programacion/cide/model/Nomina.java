@@ -4,14 +4,14 @@ public class Nomina {
     //atributos
     private int id;
     private String iban_pagament;
-    private String importe;
+    private Double importe;
     private Long nssEmpleado;
     private int codiPlaza;
     //constructor
     public Nomina(){
     }
 
-    public Nomina(int id, String iban_pagament, String importe, Long nssEmpleado, int codiPlaza){
+    public Nomina(int id, String iban_pagament, Double importe, Long nssEmpleado, int codiPlaza){
         this.id=id;
         this.iban_pagament=iban_pagament;
         this.importe=importe;
@@ -34,10 +34,10 @@ public class Nomina {
         return iban_pagament;
     }
 
-    public void setImporte(String importe){
+    public void setImporte(Double importe){
         this.importe=importe;
     }
-    public String getImporte(){
+    public Double getImporte(){
         return importe;
     }
 

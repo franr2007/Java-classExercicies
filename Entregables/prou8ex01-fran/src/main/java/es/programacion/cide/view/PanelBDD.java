@@ -18,6 +18,7 @@ public class PanelBDD extends JPanel {
         pestanas.addTab("Nominas", new PanelNomina());
         pestanas.addTab("Plazas", new PanelPlaza());
         pestanas.addTab("Tipos de plaza", new PanelTipoPla());
+        pestanas.addTab("Ocupacion", new PanelOcupa());
 
         add(pestanas, BorderLayout.CENTER);
     }
